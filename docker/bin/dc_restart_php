@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker compose exec -u root -i app-dev bash -c "service php-fpm restart"

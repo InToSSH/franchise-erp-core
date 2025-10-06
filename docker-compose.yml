@@ -1,0 +1,73 @@
+services:
+    app-dev:
+        build:
+            context: .
+            target: dev
+        working_dir: /app
+        user: application
+        env_file:
+            - .env.dev
+        ports:
+            - 8085:80
+            - "5173:5173"
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        volumes:
+            - .:/app
+        environment:
+            APP_ENV: local
+            APP_DEBUG: true
+            APP_URL: http://localhost:8085
+            DB_HOST: mysql
+            DB_PASSWORD: supersecretpassword123
+        networks:
+            - internal
+
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_ROOT_PASSWORD: supersecretpassword123
+            MYSQL_PASSWORD: supersecretpassword123
+            MYSQL_USER: laravel
+
+        ports:
+            - 63645:3306
+        volumes:
+            - db:/var/lib/mysql
+        networks:
+            - internal
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        user: root
+        networks:
+            - internal
+        ports:
+            - 8086:8025
+        environment:
+            MH_STORAGE: maildir
+            MH_MAILDIR_PATH: "/maildir"
+
+        volumes:
+            - mail:/maildir
+
+    redis:
+        image: redis:latest
+        command: redis-server --save 20 1 --loglevel warning
+        networks:
+            - internal
+        volumes:
+            - cache:/data
+
+networks:
+    internal:
+        driver: bridge
+
+volumes:
+    db:
+        driver: local
+    mail:
+        driver: local
+    cache:
+        driver: local
