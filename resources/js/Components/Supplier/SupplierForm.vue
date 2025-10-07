@@ -8,7 +8,6 @@ const props = defineProps({
     supplier: Object, // null for create, object for edit
 })
 
-// ✅ Writable computed wrapper for v-model
 const visible = computed({
     get: () => props.visible,
     set: (value) => emit('update:visible', value),

@@ -38,16 +38,16 @@
                 stripedRows
                 class="shadow rounded-lg"
             >
-                <Column field="name" header="Name" sortable />
-                <Column field="contact_person" header="Contact" />
+                <Column field="name" header="Název" sortable />
+                <Column field="contact_person" header="Kontaktní osoba" />
                 <Column field="email" header="Email" />
-                <Column field="phone" header="Phone" />
+                <Column field="phone" header="Telefon" />
                 <Column header="Status">
                     <template #body="{ data }">
                         <Tag :value="data.is_active ? 'Active' : 'Inactive'" :severity="data.is_active ? 'success' : 'danger'" />
                     </template>
                 </Column>
-                <Column header="Actions" bodyClass="text-center">
+                <Column header="Akce" bodyClass="text-center">
                     <template #body="{ data }">
                         <div class="flex gap-2 justify-center">
                             <Button
