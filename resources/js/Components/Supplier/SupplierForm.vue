@@ -1,88 +1,83 @@
 <script setup>
 import { computed } from 'vue'
-import { useInertiaFormSubmit } from '@/composables/useInertiaFormSubmit'
 import EntityFormModal from '@/Components/EntityFormModal.vue'
+import CInputText from '@/Components/Form/CInputText.vue'
 
 const props = defineProps({
     visible: Boolean,
-    supplier: Object, // null for create, object for edit
+    model: Object,
 })
 
-const visible = computed({
-    get: () => props.visible,
-    set: (value) => emit('update:visible', value),
-})
+const emit = defineEmits(['update:visible', 'saved'])
 
-const emit = defineEmits(['update:visible'])
+const routes = {
+    store: 'catalog.suppliers.store',
+    update: 'catalog.suppliers.update',
+}
 
-const isEdit = computed(() => !!props.supplier?.id)
-
-const { form, loading, errors, submit } = useInertiaFormSubmit(
-    props.supplier || {
-        name: '',
-        code: '',
-        contact_person: '',
-        email: '',
-        phone: '',
-        street: '',
-        city: '',
-        post_code: '',
-        cin: '',
-        tin: '',
-        bank_account: '',
-    },
-    { store: 'catalog.suppliers.store', update: 'catalog.suppliers.update' }
+const formTitle = computed(() =>
+    props.model && props.model.id ? 'Upravit dodavatele' : 'Přidat dodavatele'
 )
 
-function handleSubmit() {
-    submit(isEdit.value)
+const defaultValues = {
+    name: '',
+    code: '',
+    email: '',
+    phone: ''
 }
+
+const initialValues = computed(() => ({
+    ...defaultValues,
+    ...(props.model || {}),
+}))
 </script>
 
 <template>
     <EntityFormModal
-        v-model:visible="visible"
-        :title="isEdit ? 'Upravit dodavatele' : 'Přidat dodavatele'"
-        :loading="loading"
-        @submit="handleSubmit"
-        @cancel="emit('update:visible', false)"
+        v-bind:visible="props.visible"
+        v-on:update:visible="emit('update:visible', $event)"
+        :title="formTitle"
+        :routes="routes"
+        :model-id="props.model?.id"
+        :initial-values="initialValues"
+        @saved="emit('saved')"
+        #default="{ errors }"
     >
         <div class="grid gap-4">
-            <div>
-                <label>Název</label>
-                <InputText v-model="form.name" class="w-full" :invalid="!!errors.name" />
-                <small v-if="errors.name" class="text-red-500">{{ errors.name }}</small>
-            </div>
-
-            <div>
-                <label>Kontaktní osoba</label>
-                <InputText v-model="form.contact_person" class="w-full" />
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <label>Email</label>
-                    <InputText v-model="form.email" class="w-full" />
+                    <CInputText name="name" label="Název *" :error="errors.name" required/>
                 </div>
                 <div>
-                    <label>Telefon</label>
-                    <InputText v-model="form.phone" class="w-full" />
-                </div>
-            </div>
-
-            <div>
-                <label>Ulice</label>
-                <InputText v-model="form.street" class="w-full" />
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label>Město</label>
-                    <InputText v-model="form.city" class="w-full" />
+                    <CInputText name="code" label="Kód (pro importy)" :error="errors.code"/>
                 </div>
                 <div>
-                    <label>PSČ</label>
-                    <InputText v-model="form.post_code" class="w-full" />
+                    <CInputText name="email" label="Email *" :error="errors.email" required />
+                </div>
+                <div>
+                    <CInputText name="phone" label="Telefon *" :error="errors.phone" required />
+                </div>
+                <div>
+                    <CInputText name="cin" label="IČO" :error="errors.cin" />
+                </div>
+                <div>
+                    <CInputText name="tin" label="DIČ" :error="errors.tin" />
+                </div>
+                <div>
+                    <CInputText name="contact_person" label="Kontaktní osoba" :error="errors.contact_person" />
+                </div>
+                <div>
+                    <CInputText name="bank_account" label="Číslo účtu" :error="errors.bank_account" />
+                </div>
+                <Divider class="md:col-span-2"/>
+                <div class="md:col-span-2">
+                    <CInputText name="street" label="Ulice" :error="errors.street" />
+                </div>
+                <div>
+                    <CInputText name="city" label="Město" :error="errors.city" />
+                </div>
+                <div>
+                    <CInputText name="post_code" label="PSČ" :error="errors.post_code" />
                 </div>
             </div>
         </div>

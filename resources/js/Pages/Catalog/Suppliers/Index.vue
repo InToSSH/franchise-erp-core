@@ -68,7 +68,11 @@
                     </template>
                 </Column>
             </DataTable>
-            <SupplierForm v-model:visible="showForm" :supplier="editingSupplier" />
+            <SupplierForm
+                v-model:visible="showForm"
+                :model="editingSupplier"
+                @saved="handleSaved"
+            />
         </div>
 
     </AppLayout>
@@ -119,5 +123,9 @@ function openCreate() {
 function openEdit(supplier) {
     editingSupplier.value = supplier
     showForm.value = true
+}
+
+function handleSaved() {
+    router.reload({ only: ['suppliers'] })
 }
 </script>
