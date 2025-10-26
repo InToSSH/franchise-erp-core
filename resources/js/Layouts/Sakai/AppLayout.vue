@@ -5,10 +5,30 @@ import Toast from 'primevue/toast';
 import AppFooter from './AppFooter.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppTopbar from './AppTopbar.vue';
+import { useToast } from 'primevue/usetoast';
+import {usePage} from "@inertiajs/vue3";
+
+const toast = useToast();
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
 const outsideClickListener = ref(null);
+
+watch(() => usePage().props.flash, flash => {
+    console.log(flash);
+    if (flash.success) {
+        toast.add({severity: 'success', summary: 'Úspěch', detail: flash.success, life: 3000});
+    }
+
+    if (flash.error) {
+        toast.add({severity: 'error', summary: 'Chyba', detail: flash.error, life: 3000});
+    }
+
+    if (flash.message) {
+        toast.add({severity: 'info', summary: 'Info', detail: flash.message, life: 3000});
+    }
+
+}, {deep: true})
 
 watch(isSidebarActive, (newVal) => {
     if (newVal) {

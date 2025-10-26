@@ -1,5 +1,6 @@
 <script setup>
-import { Form } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
+import {watch} from "vue";
 
 const props = defineProps({
     visible: Boolean,
@@ -9,6 +10,19 @@ const props = defineProps({
     initialValues: Object, // form fields
 })
 
+const form = useForm({
+    ...props.initialValues
+})
+
+watch(() => props.visible, (newValue) => {
+    if (newValue) {
+        form.defaults({
+            ...props.initialValues
+        })
+        form.reset()
+    }
+})
+
 const emit = defineEmits(['update:visible', 'saved'])
 
 function getAction() {
@@ -16,6 +30,26 @@ function getAction() {
         return route(props.routes.update, props.modelId)
     }
     return route(props.routes.store)
+}
+
+function submitForm() {
+    if (props.modelId) {
+        form.put(getAction(), {
+            preserveScroll: true,
+            onSuccess: () => {
+                emit('saved')
+                emit('update:visible', false)
+            }
+        })
+    } else {
+        form.post(getAction(), {
+            preserveScroll: true,
+            onSuccess: () => {
+                emit('saved')
+                emit('update:visible', false)
+            }
+        })
+    }
 }
 </script>
 
@@ -29,21 +63,14 @@ function getAction() {
         draggable
         maximizable
     >
-        <Form
-            :action="getAction()"
-            :method="modelId ? 'put' : 'post'"
-            :defaults="initialValues"
-            @success="() => { emit('saved'); emit('update:visible', false) }"
-            #default="{ errors, processing }"
-        >
+        <form @submit.prevent="submitForm">
             <!-- Pass form slot -->
-            <slot :errors="errors" />
-
+            <slot :errors="form.errors" :form="form"/>
             <div class="flex justify-end gap-2 mt-6">
                 <Button label="Zrušit" text @click="visible = false" />
-                <Button type="submit" label="Uložit" :loading="processing" />
+                <Button type="submit" label="Uložit" :loading="form.processing" />
             </div>
 
-        </Form>
+        </form>
     </Dialog>
 </template>

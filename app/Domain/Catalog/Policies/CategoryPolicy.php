@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Catalog\Policies;
 
-use App\Domain\Catalog\Models\Supplier;
+use App\Domain\Catalog\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SupplierPolicy
+class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -17,7 +17,7 @@ class SupplierPolicy
         return true;
     }
 
-    public function view(User $user, Supplier $supplier): bool
+    public function view(User $user, Category $category): bool
     {
         return true;
     }
@@ -27,22 +27,22 @@ class SupplierPolicy
         return true;
     }
 
-    public function update(User $user, Supplier $supplier): bool
+    public function update(User $user, Category $category): bool
     {
         return true;
     }
 
-    public function delete(User $user, Supplier $supplier): bool
+    public function delete(User $user, Category $category): bool
     {
         return true;
     }
 
-    public function restore(User $user, Supplier $supplier): bool
+    public function restore(User $user, Category $category): bool
     {
         return true;
     }
 
-    public function forceDelete(User $user, Supplier $supplier): bool
+    public function forceDelete(User $user, Category $category): bool
     {
         return true;
     }

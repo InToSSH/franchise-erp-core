@@ -24,6 +24,7 @@ class SupplierResource extends JsonResource
             'city' => $this->city,
             'post_code' => $this->post_code,
             'country' => $this->country,
+            'full_address' => $this->fullAddress,
             'cin' => $this->cin,
             'tin' => $this->tin,
             'bank_account' => $this->bank_account,

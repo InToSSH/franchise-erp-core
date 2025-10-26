@@ -8,7 +8,9 @@ use App\Domain\Catalog\Requests\SupplierRequest;
 use App\Domain\Catalog\Resources\SupplierResource;
 use App\Domain\Catalog\Models\Supplier;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Session;
 
 class SupplierController extends Controller
 {
@@ -18,10 +20,17 @@ class SupplierController extends Controller
     {
         $this->authorize('viewAny', Supplier::class);
 
+        $suppliers = $this->getDatatableResults(
+            Supplier::query(),
+            'name',
+            ['name', 'email', 'phone', 'street', 'city'],
+            ['name', 'email', 'phone', 'street', 'city']
+        );
+
         return Inertia::render(
             'Catalog/Suppliers/Index',
             [
-                'suppliers' => SupplierResource::collection(Supplier::paginate(10)),
+                'suppliers' => SupplierResource::collection($suppliers),
             ]
         );
     }
@@ -30,14 +39,12 @@ class SupplierController extends Controller
     {
         $this->authorize('create', Supplier::class);
 
-        return new SupplierResource(Supplier::create($request->validated()));
+        Supplier::create($request->validated());
     }
 
     public function show(Supplier $supplier)
     {
         $this->authorize('view', $supplier);
-
-        return new SupplierResource($supplier);
     }
 
     public function update(SupplierRequest $request, Supplier $supplier)
@@ -45,16 +52,11 @@ class SupplierController extends Controller
         $this->authorize('update', $supplier);
 
         $supplier->update($request->validated());
-
-        return new SupplierResource($supplier);
     }
 
     public function destroy(Supplier $supplier)
     {
         $this->authorize('delete', $supplier);
-
-        $supplier->delete();
-
-        return response()->json();
+        return $this->destroyModel($supplier);
     }
 }
