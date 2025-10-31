@@ -14,7 +14,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import { definePreset } from '@primeuix/themes';
 
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = 'OOO Intranet';
 
 const MainPreset = definePreset(Aura, {
     semantic: {

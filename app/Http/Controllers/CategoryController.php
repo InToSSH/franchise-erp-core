@@ -4,20 +4,29 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Domain\Catalog\Actions\Category\GetTree;
+use App\Domain\Catalog\Actions\Category\MoveCategory;
 use App\Domain\Catalog\Models\Category;
+use App\Domain\Catalog\Requests\CategoryMoveRequest;
 use App\Domain\Catalog\Requests\CategoryRequest;
 use App\Domain\Catalog\Resources\CategoryResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function index(GetTree $getTree)
     {
         $this->authorize('viewAny', Category::class);
 
-        return CategoryResource::collection(Category::all());
+        return Inertia::render(
+            'Catalog/Categories/Index',
+            [
+                'categories' => $getTree->asTreeNodes(),
+            ]
+        );
     }
 
     public function store(CategoryRequest $request)
@@ -50,5 +59,19 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json();
+    }
+
+    public function move(Category $category, CategoryMoveRequest $categoryMoveRequest, MoveCategory $moveCategory)
+    {
+        $this->authorize('update', $category);
+
+        $moveCategory->execute(
+            $category,
+            $categoryMoveRequest->validated('parent_id'),
+            $categoryMoveRequest->validated('after_id'),
+            $categoryMoveRequest->validated('before_id')
+        );
+
+        return new CategoryResource($category);
     }
 }

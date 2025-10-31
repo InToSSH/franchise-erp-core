@@ -15,7 +15,7 @@ class MoveCategory
             return $category;
         }
 
-        if (isset($parentId)) {
+        if (isset($parentId) && $afterId === null && $beforeId === null) {
             if ($parent = Category::find($parentId)) {
                 $category->appendToNode($parent)->save();
                 return $category;

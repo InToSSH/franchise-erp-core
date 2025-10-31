@@ -12,6 +12,8 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('code');
+            $table->string('icon')->nullable();
             $table->nestedSet();
             $table->timestamps();
         });

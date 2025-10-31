@@ -12,7 +12,7 @@ class SupplierRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'code' => ['nullable'],
+            'code' => ['required', 'unique:suppliers,code'],
             'contact_person' => ['nullable'],
             'email' => ['required', 'email', 'max:254'],
             'phone' => ['nullable'],

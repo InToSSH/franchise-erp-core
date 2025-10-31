@@ -10,8 +10,22 @@ class CategoryRequest extends FormRequest
 {
     public function rules(): array
     {
+        return $this->isMethod('POST') ? $this->store() : $this->update();
+    }
+
+    protected function store(): array
+    {
         return [
             'name' => ['required'],
+            'code' => ['required', 'unique:categories,code', 'alpha_dash:ascii'],
+        ];
+    }
+
+    protected function update(): array
+    {
+        return [
+            'name' => [],
+            'code' => ['unique:categories,code,' . $this->category->id, 'alpha_dash:ascii'],
         ];
     }
 
