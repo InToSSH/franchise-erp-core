@@ -33,14 +33,12 @@ class CategoryController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        return new CategoryResource(Category::create($request->validated()));
+        Category::create($request->validated());
     }
 
     public function show(Category $category)
     {
         $this->authorize('view', $category);
-
-        return new CategoryResource($category);
     }
 
     public function update(CategoryRequest $request, Category $category)
@@ -48,17 +46,12 @@ class CategoryController extends Controller
         $this->authorize('update', $category);
 
         $category->update($request->validated());
-
-        return new CategoryResource($category);
     }
 
     public function destroy(Category $category)
     {
         $this->authorize('delete', $category);
-
-        $category->delete();
-
-        return response()->json();
+        return $this->destroyModel($category);
     }
 
     public function move(Category $category, CategoryMoveRequest $categoryMoveRequest, MoveCategory $moveCategory)

@@ -34,12 +34,17 @@
                         <Button
                             icon="pi pi-trash"
                             class="p-button-text p-button-sm p-button-danger"
-                            @click.stop="$emit('confirm-delete', node.data)"
+                            @click.stop="confirmDelete(node.data)"
                         />
                     </template>
                 </Tree>
             </div>
         </div>
+        <CategoryForm
+            v-model:visible="showForm"
+            :model="editingModel"
+            :additional-data="{ parent_id: 2 }"
+        />
         <ConfirmDialog></ConfirmDialog>
 
     </AppLayout>
@@ -50,12 +55,16 @@ import AppLayout from '@/Layouts/Sakai/AppLayout.vue';
 import {onMounted, ref, watch} from 'vue'
 import {Head, router} from "@inertiajs/vue3";
 import {useToast} from "primevue/usetoast";
+import CategoryForm from "@/Components/Category/CategoryForm.vue";
+import {useConfirm} from "primevue";
 const props = defineProps({
     categories: Array,
 })
 
+const confirm = useConfirm()
 let categoriesDynamic = ref([]);
 const expandedKeys = ref({});
+
 // watch for prop changes and update local state
 watch(() => props.categories, (newCategories) => {
     categoriesDynamic.value = newCategories
@@ -68,10 +77,10 @@ onMounted(() => {
 const toast = useToast();
 
 const showForm = ref(false)
-const editingSupplier = ref(null)
+const editingModel = ref(null)
 
 function openCreate() {
-    editingSupplier.value = null
+    editingModel.value = null
     showForm.value = true
 }
 
@@ -133,8 +142,31 @@ function findParent(tree, childKey) {
     return null
 }
 
-function openEdit(supplier) {
-    editingSupplier.value = supplier
+function openEdit(category) {
+    console.log('editing', category);
+    editingModel.value = category
     showForm.value = true
+}
+
+function confirmDelete(model) {
+    confirm.require({
+        message: `Opravdu chcete smazat tuto kategorii?`,
+        header: 'Potvrzení smazání',
+        icon: 'pi pi-info-circle',
+        rejectProps: {
+            label: 'Zrušit',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Smazat',
+            severity: 'danger'
+        },
+        accept: () => {
+            router.delete(route('catalog.categories.destroy', model.id), {
+                preserveState: true
+            })
+        },
+    })
 }
 </script>

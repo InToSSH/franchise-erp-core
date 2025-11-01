@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Catalog\Actions\Category;
 
 use App\Domain\Catalog\Models\Category;
+use App\Domain\Catalog\Resources\CategoryResource;
 
 class GetTree
 {
@@ -39,6 +40,7 @@ class GetTree
                 'label' => $category->name,
                 'icon' => $category->icon,
                 'children' => $category->children->map($mapToTreeNode)->toArray(),
+                'data' => (new CategoryResource($category))->toArray(request()),
             ];
         };
 

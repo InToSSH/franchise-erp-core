@@ -3,23 +3,20 @@
         <div class="p-6 space-y-4">
             <!-- Header -->
             <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Dodavatelé</h1>
-                <Button label="Přidat dodavatele" icon="pi pi-plus" @click="openCreate" />
+                <h1 class="text-3xl font-semibold">Produkty</h1>
+                <Button label="Přidat produkt" icon="pi pi-plus" @click="openCreate" />
             </div>
 
 
             <DataGrid
-                :resource="suppliers"
-                route-prefix="catalog.suppliers"
+                :resource="products"
+                route-prefix="catalog.products"
                 @editAction="openEdit"
             >
                 <Column field="name" header="Název" sortable />
-                <Column field="code" header="Kód" sortable />
-                <Column field="contact_person" header="Kontaktní osoba" />
-                <Column field="email" header="Email" sortable />
-                <Column field="phone" header="Telefon" sortable />
-                <Column field="full_address" header="Adresa" />
-                <Column field="cin" header="IČO" sortable />
+                <Column field="sku" header="SKU" sortable />
+                <Column field="category.name" header="Kategorie" />
+                <Column field="price" header="Cena" sortable />
             </DataGrid>
             <SupplierForm
                 v-model:visible="showForm"
@@ -38,7 +35,7 @@ import {ref} from 'vue'
 import DataGrid from "@/Components/DataGrid.vue";
 
 const props = defineProps({
-    suppliers: Object,
+    products: Object,
 })
 
 const showForm = ref(false)

@@ -16,6 +16,10 @@ const outsideClickListener = ref(null);
 
 watch(() => usePage().props.flash, flash => {
     console.log(flash);
+    if (flash.success === null && flash.error === null && flash.message === null) {
+        return;
+    }
+
     if (flash.success) {
         toast.add({severity: 'success', summary: 'Úspěch', detail: flash.success, life: 3000});
     }
@@ -26,6 +30,12 @@ watch(() => usePage().props.flash, flash => {
 
     if (flash.message) {
         toast.add({severity: 'info', summary: 'Info', detail: flash.message, life: 3000});
+    }
+
+    usePage().props.flash = {
+        success: null,
+        error: null,
+        message: null
     }
 
 }, {deep: true})
