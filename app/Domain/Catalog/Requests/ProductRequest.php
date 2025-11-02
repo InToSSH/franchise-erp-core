@@ -12,13 +12,14 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'sku' => ['required'],
-            'supplier_id' => ['required', 'exists:suppliers'],
-            'ean' => ['required'],
-            'description' => ['required'],
-            'weight' => ['required', 'numeric'],
-            'qty_unit' => ['required'],
+            'sku' => ['required', 'alpha_dash:ascii'],
+            'supplier_id' => ['required', 'exists:suppliers,id'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'ean' => ['nullable'],
+            'description' => ['nullable'],
+            'weight' => ['numeric'],
             'price' => ['required', 'numeric'],
+            'qty_in_pack' => ['numeric'],
             'image' => ['nullable', 'image'],
         ];
     }

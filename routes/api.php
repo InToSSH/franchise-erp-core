@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::name('api.')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/catalog/categories/{category}/move', [CategoryController::class, 'move'])->name('catalog.categories.move');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/catalog/categories/{category}/move', [CategoryController::class, 'move'])->name('catalog.categories.move');
+        Route::get('/catalog/categories/tree/{parent?}', [CategoryController::class, 'getTree'])->name('catalog.categories.tree');
+    });
 });
+

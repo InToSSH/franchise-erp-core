@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,8 +28,11 @@ Route::middleware(
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/assets/images/{path}', [AssetsController::class, 'getImage'])->where('path','.+')->name('assets.images');
+
     Route::prefix('catalog')->name('catalog.')->group(function () {
         Route::resource('suppliers', SupplierController::class);
         Route::resource('categories', CategoryController::class);
+        Route::resource('products', ProductController::class);
     });
 });

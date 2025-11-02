@@ -13,10 +13,12 @@ class Product extends Model
         'name',
         'sku',
         'supplier_id',
+        'category_id',
         'ean',
         'description',
         'weight',
         'price',
+        'qty_in_pack',
         'image_path',
     ];
 

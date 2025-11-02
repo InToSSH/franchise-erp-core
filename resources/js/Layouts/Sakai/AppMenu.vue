@@ -19,7 +19,7 @@ const model = ref([
         icon: 'pi pi-fw pi-briefcase',
         to: '/pages',
         items: [
-            {label: 'Položky', gicon: 'sell', to: '/catalog/items'},
+            {label: 'Zboží', gicon: 'sell', to: '/catalog/products'},
             {label: 'Kategorie', gicon: 'flowchart', to: '/catalog/categories'},
             {label: 'Dodavatelé', gicon: 'store', to: '/catalog/suppliers'},
 

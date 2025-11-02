@@ -6,15 +6,10 @@ const props = defineProps({
     name: String,
     label: String,
     error: String,
-    required: Boolean,
-    autofocus: {
-        type: Boolean,
-        default: false
-    },
-    type: {
+    editorStyle: {
         type: String,
-        default: 'text'
-    }
+        default: 'height: 200px'
+    },
 })
 
 const model = defineModel()
@@ -23,14 +18,6 @@ const model = defineModel()
 
 <template>
     <label class="block text-sm font-medium mb-1">{{ label }}</label>
-    <InputText
-        v-model="model"
-        :name="name"
-        :type="type"
-        :required="required"
-        :autofocus="autofocus"
-        class="w-full"
-        :invalid="!!error"
-    />
+    <Editor :name="name" v-model="model" :editorStyle="editorStyle" :invalid="!!error"/>
     <small v-if="error" class="text-red-500">{{ error }}</small>
 </template>

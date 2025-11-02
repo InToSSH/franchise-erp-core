@@ -6,6 +6,7 @@ use App\Domain\Catalog\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Domain\Catalog\Models\Category;
 
 return new class extends Migration {
     public function up(): void
@@ -20,6 +21,7 @@ return new class extends Migration {
             $table->longText('description')->nullable();
             $table->decimal('weight')->nullable();
             $table->decimal('price', 15, 2)->default(0);
+            $table->integer('qty_in_pack')->default(1)->unsigned();
             $table->string('image_path')->nullable();
             $table->timestamps();
         });

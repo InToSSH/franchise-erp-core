@@ -7,13 +7,9 @@ const props = defineProps({
     label: String,
     error: String,
     required: Boolean,
-    autofocus: {
-        type: Boolean,
-        default: false
-    },
-    type: {
-        type: String,
-        default: 'text'
+    rows: {
+        type: Number,
+        default: 4
     }
 })
 
@@ -23,14 +19,6 @@ const model = defineModel()
 
 <template>
     <label class="block text-sm font-medium mb-1">{{ label }}</label>
-    <InputText
-        v-model="model"
-        :name="name"
-        :type="type"
-        :required="required"
-        :autofocus="autofocus"
-        class="w-full"
-        :invalid="!!error"
-    />
+    <Textarea :name="name" :required="required" :rows="rows" v-model="model" class="w-full" :invalid="!!error" />
     <small v-if="error" class="text-red-500">{{ error }}</small>
 </template>

@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'supplier_id' => $this->supplier_id,
             'supplier' => new SupplierResource($this->whenLoaded('supplier')),
+            'image_path' => $this->image_path,
             'weight' => $this->weight,
             'price' => $this->price,
             'created_at' => $this->created_at,

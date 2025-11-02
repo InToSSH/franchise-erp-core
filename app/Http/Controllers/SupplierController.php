@@ -7,15 +7,10 @@ namespace App\Http\Controllers;
 use App\Domain\Catalog\Requests\SupplierRequest;
 use App\Domain\Catalog\Resources\SupplierResource;
 use App\Domain\Catalog\Models\Supplier;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Session;
 
 class SupplierController extends Controller
 {
-    use AuthorizesRequests;
-
     public function index()
     {
         $this->authorize('viewAny', Supplier::class);

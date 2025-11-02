@@ -53,7 +53,7 @@ const initialValues = computed(() => ({
         <div class="grid gap-4">
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <CInputText name="name" label="Název *" v-model="form.name" :error="errors.name" required />
+                    <CInputText name="name" label="Název *" v-model="form.name" :error="errors.name" required autofocus />
                 </div>
                 <div>
                     <CInputText name="code" label="Kód (pro importy) *" v-model="form.code" :error="errors.code" required />
