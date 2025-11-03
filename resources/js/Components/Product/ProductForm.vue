@@ -40,6 +40,7 @@ const defaultValues = {
     price: '',
     qty_in_pack: '',
     image: '',
+    image_path: '',
 }
 
 const initialValues = computed(() => ({
@@ -102,7 +103,11 @@ const initialValues = computed(() => ({
                 </div>
                 <Divider class="md:col-span-2"/>
                 <div>
-                    <CFileUpload name="image" label="Obrázek" v-model="form.image" :error="errors.image" />
+                    <CFileUpload name="image" label="Nový obrázek" v-model="form.image" :error="errors.image" />
+                </div>
+                <div v-if="initialValues.image_path">
+                    <label class="block text-sm font-medium mb-1">Aktuální obrázek</label>
+                    <img :src="route('assets.images', {path: initialValues.image_path})" class="w-full rounded" />
                 </div>
             </div>
         </div>
