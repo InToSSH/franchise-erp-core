@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Catalog\Resources;
+namespace App\Domain\Admin\Resources;
 
-use App\Domain\Catalog\Models\Supplier;
+use App\Domain\Admin\Models\Branch;
+use App\Http\Resources\UserOptionResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin Supplier */
-class SupplierResource extends JsonResource
+/** @mixin Branch */
+class BranchResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -17,17 +19,16 @@ class SupplierResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
-            'contact_person' => $this->contact_person,
+            'manager' => new UserResource($this->whenLoaded('manager')),
+            'users' => UserOptionResource::collection($this->whenLoaded('users')),
             'email' => $this->email,
             'phone' => $this->phone,
+            'cin' => $this->cin,
+            'tin' => $this->tin,
             'street' => $this->street,
             'city' => $this->city,
             'post_code' => $this->post_code,
-            'country' => $this->country,
             'full_address' => $this->full_address,
-            'cin' => $this->cin,
-            'tin' => $this->tin,
-            'bank_account' => $this->bank_account,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
