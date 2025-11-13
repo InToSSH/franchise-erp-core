@@ -16,6 +16,10 @@ const props = defineProps({
     name: String,
     label: String,
     error: String,
+    readOnly: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const model = defineModel()
@@ -38,6 +42,7 @@ const optionSelected = (e) => {
         class="w-full"
         :invalid="!!error"
         @node-select="optionSelected"
+        :disabled="readOnly"
         filter
         filterMode="lenient"
     />

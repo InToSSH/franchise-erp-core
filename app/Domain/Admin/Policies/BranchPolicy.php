@@ -14,36 +14,36 @@ class BranchPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('admin.branches.view');
     }
 
     public function view(User $user, Branch $branch): bool
     {
-        return true;
+        return $user->can('admin.branches.view');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('admin.branches.edit');
     }
 
     public function update(User $user, Branch $branch): bool
     {
-        return true;
+        return $user->can('admin.branches.edit');
     }
 
     public function delete(User $user, Branch $branch): bool
     {
-        return true;
+        return $user->can('admin.branches.edit');
     }
 
     public function restore(User $user, Branch $branch): bool
     {
-        return true;
+        return $user->can('admin.branches.edit');
     }
 
     public function forceDelete(User $user, Branch $branch): bool
     {
-        return true;
+        return $user->can('admin.branches.edit');
     }
 }

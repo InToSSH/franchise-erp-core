@@ -5,7 +5,7 @@
             <!-- Header -->
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold">Kategorie</h1>
-                <Button label="Přidat kategorii" icon="pi pi-plus" @click="openCreate" />
+                <Button label="Přidat kategorii" icon="pi pi-plus" @click="openCreate" v-if="$userCan('catalog.categories.edit')"/>
             </div>
             <div>
                 <div class="flex flex-wrap gap-2 mb-6">
@@ -29,11 +29,13 @@
                         <Button
                             icon="pi pi-pencil"
                             class="ml-1 p-button-text p-button-sm"
+                            v-if="$userCan('catalog.categories.edit')"
                             @click.stop="openEdit(node.data)"
                         />
                         <Button
                             icon="pi pi-trash"
                             class="p-button-text p-button-sm p-button-danger"
+                            v-if="$userCan('catalog.categories.edit')"
                             @click.stop="confirmDelete(node.data)"
                         />
                     </template>

@@ -14,36 +14,36 @@ class SupplierPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.view');
     }
 
     public function view(User $user, Supplier $supplier): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.view');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.edit');
     }
 
     public function update(User $user, Supplier $supplier): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.edit');
     }
 
     public function delete(User $user, Supplier $supplier): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.edit');
     }
 
     public function restore(User $user, Supplier $supplier): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.edit');
     }
 
     public function forceDelete(User $user, Supplier $supplier): bool
     {
-        return true;
+        return $user->can('catalog.suppliers.edit');
     }
 }

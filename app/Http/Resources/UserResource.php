@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'branches' => BranchOptionResource::collection($this->whenLoaded('branches')),
+            'roles' => RoleOptionResource::collection($this->roles),
             'profile_photo_path' => $this->profile_photo_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

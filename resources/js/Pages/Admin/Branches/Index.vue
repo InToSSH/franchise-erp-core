@@ -4,7 +4,7 @@
             <!-- Header -->
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold">Pobočky</h1>
-                <Button label="Přidat pobočku" icon="pi pi-plus" @click="openCreate" />
+                <Button label="Přidat pobočku" icon="pi pi-plus" @click="openCreate" v-if="$userCan('admin.branches.edit')"/>
             </div>
 
 
@@ -12,6 +12,7 @@
                 :resource="branches"
                 route-prefix="admin.branches"
                 @editAction="openEdit"
+                delete-acl="admin.branches.edit"
             >
                 <Column field="name" header="Název" sortable />
                 <Column field="email" header="Email" sortable />

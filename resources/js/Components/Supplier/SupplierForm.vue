@@ -47,6 +47,7 @@ const initialValues = computed(() => ({
         :routes="routes"
         :model-id="props.model?.id"
         :initial-values="initialValues"
+        :read-only="!$userCan('catalog.suppliers.edit')"
         @saved="emit('saved')"
         #default="{ errors, form }"
     >

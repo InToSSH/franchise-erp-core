@@ -4,7 +4,7 @@
             <!-- Header -->
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold">Produkty</h1>
-                <Button label="Přidat produkt" icon="pi pi-plus" @click="openCreate" />
+                <Button label="Přidat produkt" icon="pi pi-plus" @click="openCreate" v-if="$userCan('catalog.products.edit')"/>
             </div>
 
             <div class="grid grid-cols-10 gap-2">
@@ -16,6 +16,7 @@
                         :resource="products"
                         route-prefix="catalog.products"
                         @editAction="openEdit"
+                        delete-acl="catalog.products.edit"
                     >
                         <Column header="Obrázek">
                             <template #body="slotProps">

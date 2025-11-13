@@ -17,6 +17,10 @@ const props = defineProps({
     showDeleteAction: {
         type: Boolean,
         default: true
+    },
+    deleteAcl: {
+        type: String,
+        default: null
     }
 })
 
@@ -148,6 +152,7 @@ function confirmDelete(model) {
                             severity="danger"
                             rounded
                             text
+                            v-if="showDeleteAction && (!deleteAcl || $userCan(deleteAcl))"
                             @click="confirmDelete(data)"
                         />
                     </div>

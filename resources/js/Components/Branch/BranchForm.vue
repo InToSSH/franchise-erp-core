@@ -45,6 +45,7 @@ const initialValues = computed(() => ({
         :routes="routes"
         :model-id="props.model?.id"
         :initial-values="initialValues"
+        :read-only="!$userCan('admin.branches.edit')"
         @saved="emit('saved')"
         #default="{ errors, form }"
     >

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Domain\Admin\Models\Branch;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -56,6 +57,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'abilities',
     ];
 
     public function managedBranches(): HasMany
@@ -79,5 +81,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function abilities(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->getAbilities()->pluck('name'),
+        );
     }
 }

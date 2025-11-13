@@ -10,6 +10,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    roles: {
+        type: Array,
+        default: () => [],
+    },
 })
 
 const emit = defineEmits(['update:visible', 'saved'])
@@ -29,13 +33,15 @@ const defaultValues = {
     phone: '',
     password: '',
     password_confirmation: '',
+    roles: [],
     branches: []
 }
 
 const initialValues = computed(() => ({
     ...defaultValues,
     ...(props.model || {}),
-    branches: props.model?.branches?.map(branch => branch.value) || []
+    branches: props.model?.branches?.map(branch => branch.value) || [],
+    roles: props.model?.roles?.map(role => role.value) || []
 }))
 
 </script>
@@ -48,6 +54,7 @@ const initialValues = computed(() => ({
         :routes="routes"
         :model-id="props.model?.id"
         :initial-values="initialValues"
+        :read-only="!$userCan('admin.users.edit')"
         @saved="emit('saved')"
         #default="{ errors, form }"
     >
@@ -71,6 +78,18 @@ const initialValues = computed(() => ({
                     </div>
                 </div>
                 <Divider class="md:col-span-2"/>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Role uživatele</label>
+                    <MultiSelect
+                        v-model="form.roles"
+                        :options="roles"
+                        option-label="label"
+                        option-value="value"
+                        filter
+                        placeholder="Vyberte role"
+                        class="w-full"
+                    />
+                </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">Pobočky</label>
                     <MultiSelect

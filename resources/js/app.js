@@ -12,6 +12,7 @@ import Aura from '@primeuix/themes/aura';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import { definePreset } from '@primeuix/themes';
+import UserCanPlugin from "@/plugins/userCan.js";
 
 
 const appName = 'OOO Intranet';
@@ -53,6 +54,7 @@ createInertiaApp({
                 })
             .use(ToastService)
             .use(ConfirmationService)
+            .use(UserCanPlugin)
             .mount(el);
     },
     progress: {

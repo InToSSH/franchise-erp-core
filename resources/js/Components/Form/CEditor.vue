@@ -10,6 +10,10 @@ const props = defineProps({
         type: String,
         default: 'height: 200px'
     },
+    readOnly: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const model = defineModel()
@@ -18,6 +22,6 @@ const model = defineModel()
 
 <template>
     <label class="block text-sm font-medium mb-1">{{ label }}</label>
-    <Editor :name="name" v-model="model" :editorStyle="editorStyle" :invalid="!!error"/>
+    <Editor :name="name" v-model="model" :editorStyle="editorStyle" :invalid="!!error" :readonly="readOnly"/>
     <small v-if="error" class="text-red-500">{{ error }}</small>
 </template>

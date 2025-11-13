@@ -9,8 +9,10 @@ use App\Actions\User\UpdateUser;
 use App\Domain\Admin\Models\Branch;
 use App\Domain\Admin\Resources\BranchOptionResource;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\RoleOptionResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Bouncer;
 
 class UserController extends Controller
 {
@@ -28,6 +30,7 @@ class UserController extends Controller
         return inertia('Admin/Users/Index', [
             'users' => UserResource::collection($users),
             'branches' => BranchOptionResource::collection(Branch::orderBy('name')->get())->toArray(request()),
+            'roles' => RoleOptionResource::collection(Bouncer::role()->get())->toArray(request()),
         ]);
     }
 

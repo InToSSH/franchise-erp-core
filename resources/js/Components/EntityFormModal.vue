@@ -8,6 +8,10 @@ const props = defineProps({
     modelId: [Number, String, null],
     routes: Object, // { store, update }
     initialValues: Object, // form fields
+    readOnly: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const form = useForm({
@@ -65,12 +69,13 @@ function submitForm() {
     >
         <form @submit.prevent="submitForm">
             <!-- Pass form slot -->
-            <slot :errors="form.errors" :form="form"/>
+            <fieldset :disabled="readOnly" class="space-y-4">
+            <slot :errors="form.errors" :form="form" :readOnly="readOnly"/>
             <div class="flex justify-end gap-2 mt-6">
                 <Button label="Zrušit" text @click="visible = false" />
                 <Button type="submit" label="Uložit" :loading="form.processing" />
             </div>
-
+            </fieldset>
         </form>
     </Dialog>
 </template>

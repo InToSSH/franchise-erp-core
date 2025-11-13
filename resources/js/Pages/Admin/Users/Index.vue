@@ -4,7 +4,7 @@
             <!-- Header -->
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold">Uživatelé</h1>
-                <Button label="Přidat uživatele" icon="pi pi-plus" @click="openCreate" />
+                <Button label="Přidat uživatele" icon="pi pi-plus" @click="openCreate" v-if="$userCan('admin.users.edit')"/>
             </div>
 
 
@@ -12,6 +12,7 @@
                 :resource="users"
                 route-prefix="admin.users"
                 @editAction="openEdit"
+                delete-acl="admin.users.edit"
             >
                 <Column field="name" header="Název" sortable />
                 <Column field="email" header="Email" sortable />
@@ -28,11 +29,24 @@
                         </div>
                     </template>
                 </Column>
+                <Column field="roles" header="Role">
+                    <template #body="slotProps">
+                        <div class="flex flex-wrap gap-1">
+                            <Badge
+                                v-for="role in slotProps.data.roles"
+                                :key="role.value"
+                                :value="role.label"
+                                severity="info"
+                            />
+                        </div>
+                    </template>
+                </Column>
             </DataGrid>
             <UserForm
                 v-model:visible="showForm"
                 :model="editingModel"
                 :branches="branches"
+                :roles="roles"
             />
         </div>
         <ConfirmDialog></ConfirmDialog>
@@ -49,6 +63,7 @@ import UserForm from "@/Components/User/UserForm.vue";
 const props = defineProps({
     users: Object,
     branches: Array,
+    roles: Array
 })
 
 const showForm = ref(false)

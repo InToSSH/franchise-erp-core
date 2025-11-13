@@ -24,6 +24,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
                     <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
                 </button>
             </div>
+            <Divider layout="vertical"></Divider>
 
             <button
                 class="layout-topbar-menu-button layout-topbar-action"
@@ -34,18 +35,29 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
             <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-calendar"></i>
-                        <span>Calendar</span>
+<!--                    <button type="button" class="layout-topbar-action">-->
+<!--                        <i class="pi pi-calendar"></i>-->
+<!--                        <span>Calendar</span>-->
+<!--                    </button>-->
+<!--                    <button type="button" class="layout-topbar-action">-->
+<!--                        <i class="pi pi-inbox"></i>-->
+<!--                        <span>Messages</span>-->
+<!--                    </button>-->
+<!--                    <button type="button" class="layout-topbar-action">-->
+<!--                        <i class="pi pi-user"></i>-->
+<!--                        <span>Profile</span>-->
+<!--                    </button>-->
+                    <div class="ml-3  flex items-center self-center h-full">
+                        <div>
+                            {{ $page.props.auth.user.name }}
+                        </div>
+                    </div>
+                    <button type="button" class="layout-topbar-action" @click="$inertia.post(route('logout'))">
+                        <i class="pi pi-sign-out"></i>
+                        <span>Logout</span>
                     </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-inbox"></i>
-                        <span>Messages</span>
-                    </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
-                    </button>
+                    <!-- Name of the user vertically centered -->
+
                 </div>
             </div>
         </div>

@@ -14,36 +14,36 @@ class ProductPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('catalog.products.view');
     }
 
     public function view(User $user, Product $product): bool
     {
-        return true;
+        return $user->can('catalog.products.view');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('catalog.products.edit');
     }
 
     public function update(User $user, Product $product): bool
     {
-        return true;
+        return $user->can('catalog.products.edit');
     }
 
     public function delete(User $user, Product $product): bool
     {
-        return true;
+        return $user->can('catalog.products.edit');
     }
 
     public function restore(User $user, Product $product): bool
     {
-        return true;
+        return $user->can('catalog.products.edit');
     }
 
     public function forceDelete(User $user, Product $product): bool
     {
-        return true;
+        return $user->can('catalog.products.edit');
     }
 }

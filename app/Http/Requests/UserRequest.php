@@ -22,6 +22,8 @@ class UserRequest extends FormRequest
             'password' => ['required', 'confirmed:password_confirmation', 'min:8'],
             'branches' => ['array'],
             'branches.*' => ['integer', 'exists:branches,id'],
+            'roles' => ['array'],
+            'roles.*' => ['string', 'exists:roles,name'],
         ];
     }
 
@@ -34,6 +36,8 @@ class UserRequest extends FormRequest
             'password' => ['nullable', 'confirmed:password_confirmation', 'min:8'],
             'branches' => ['array'],
             'branches.*' => ['integer', 'exists:branches,id'],
+            'roles' => ['array'],
+            'roles.*' => ['string', 'exists:roles,name'],
         ];
     }
 }

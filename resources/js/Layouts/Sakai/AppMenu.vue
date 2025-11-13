@@ -1,27 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import {inject, ref} from 'vue';
 
 import AppMenuItem from './AppMenuItem.vue';
-
+const can = inject('userCan');
 const model = ref([
-    {
-        label: 'Home',
-        items: [{ label: 'Dashboard', gicon: 'home', to: '/dashboard' }]
-    },
     {
         label: 'Menu',
         items: [
-            { label: 'Objednávky', gicon: 'order_approve', to: '/orders' },
+            { label: 'Objednávky', gicon: 'order_approve', to: '/orders', visible: can('sales.orders.view') },
         ]
     },
     {
         label: 'Katalog',
         icon: 'pi pi-fw pi-briefcase',
         to: '/pages',
+        visible: can('catalog.products.view') || can('catalog.categories.view') || can('catalog.suppliers.view'),
         items: [
-            {label: 'Zboží', gicon: 'sell', to: '/catalog/products'},
-            {label: 'Kategorie', gicon: 'flowchart', to: '/catalog/categories'},
-            {label: 'Dodavatelé', gicon: 'store', to: '/catalog/suppliers'},
+            {label: 'Zboží', gicon: 'sell', to: '/catalog/products', visible: can('catalog.products.view')},
+            {label: 'Kategorie', gicon: 'flowchart', to: '/catalog/categories', visible: can('catalog.categories.view')},
+            {label: 'Dodavatelé', gicon: 'store', to: '/catalog/suppliers', visible: can('catalog.suppliers.view')},
 
         ]
     },
@@ -29,9 +26,10 @@ const model = ref([
         label: 'Administrace',
         icon: 'pi pi-fw pi-briefcase',
         to: '/pages',
+        visible: can('admin.branches.view') || can('admin.users.view'),
         items: [
-            {label: 'Pobočky', gicon: 'globe', to: '/admin/branches'},
-            {label: 'Uživatelé', gicon: 'person', to: '/admin/users'},
+            {label: 'Pobočky', gicon: 'globe', to: '/admin/branches', visible: can('admin.branches.view')},
+            {label: 'Uživatelé', gicon: 'person', to: '/admin/users', visible: can('admin.users.view')},
         ]
     },
 ]);

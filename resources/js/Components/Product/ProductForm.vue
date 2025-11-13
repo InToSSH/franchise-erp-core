@@ -57,6 +57,7 @@ const initialValues = computed(() => ({
         :routes="routes"
         :model-id="props.model?.id"
         :initial-values="initialValues"
+        :read-only="!$userCan('catalog.products.edit')"
         @saved="emit('saved')"
         #default="{ errors, form }"
     >
@@ -77,6 +78,7 @@ const initialValues = computed(() => ({
                         label="Kategorie *"
                         v-model="form.category_id"
                         :error="errors.category_id"
+                        :read-only="!$userCan('catalog.products.edit')"
                     />
                 </div>
                 <div>
@@ -90,7 +92,7 @@ const initialValues = computed(() => ({
                     />
                 </div>
                 <div class="md:col-span-2">
-                    <CEditor name="description" label="Popis" v-model="form.description" :error="errors.description" />
+                    <CEditor name="description" label="Popis" v-model="form.description" :error="errors.description" :read-only="!$userCan('catalog.products.edit')"/>
                 </div>
                 <div>
                     <CInputNumber name="price" label="Cena" mode="currency" currency="CZK" v-model="form.price" :error="errors.price" />
@@ -102,7 +104,7 @@ const initialValues = computed(() => ({
                     <CInputNumber name="qty_in_pack" label="Ks v balení" v-model="form.qty_in_pack"  :error="errors.qty_in_pack" />
                 </div>
                 <Divider class="md:col-span-2"/>
-                <div>
+                <div v-if="$userCan('catalog.products.edit')">
                     <CFileUpload name="image" label="Nový obrázek" v-model="form.image" :error="errors.image" />
                 </div>
                 <div v-if="initialValues.image_path">

@@ -13,36 +13,36 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('admin.users.view');
     }
 
     public function view(User $user, User $model): bool
     {
-        return true;
+        return $user->can('admin.users.view');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('admin.users.edit');
     }
 
     public function update(User $user, User $model): bool
     {
-        return true;
+        return $user->can('admin.users.edit');
     }
 
     public function delete(User $user, User $model): bool
     {
-        return true;
+        return $user->can('admin.users.edit');
     }
 
     public function restore(User $user, User $model): bool
     {
-        return true;
+        return $user->can('admin.users.edit');
     }
 
     public function forceDelete(User $user, User $model): bool
     {
-        return true;
+        return $user->can('admin.users.edit');
     }
 }
