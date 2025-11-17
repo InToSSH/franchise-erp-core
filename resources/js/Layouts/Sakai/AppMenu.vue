@@ -7,7 +7,7 @@ const model = ref([
     {
         label: 'Menu',
         items: [
-            { label: 'Objednávky', gicon: 'order_approve', to: '/orders', visible: can('sales.orders.view') },
+            { label: 'Objednávky', gicon: 'order_approve', to: '/sales/orders', visible: can('sales.orders.view') },
         ]
     },
     {

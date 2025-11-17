@@ -27,7 +27,11 @@
                         <Column field="sku" header="SKU" sortable />
                         <Column field="category.name" header="Kategorie" />
                         <Column field="supplier.name" header="Dodavatel" />
-                        <Column field="price" header="Cena" sortable />
+                        <Column field="price" header="Cena" sortable>
+                            <template #body="{ data }">
+                                {{ $formatCurrency(data.price) }}
+                            </template>
+                        </Column>
                     </DataGrid>
                 </div>
             </div>

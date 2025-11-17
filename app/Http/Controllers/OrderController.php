@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Domain\Admin\Models\Branch;
+use App\Domain\Admin\Resources\BranchOptionResource;
 use App\Domain\Admin\Resources\BranchResource;
 use App\Domain\Sales\Actions\CreateOrder;
 use App\Domain\Sales\Actions\UpdateOrder;
@@ -36,7 +37,7 @@ class OrderController extends Controller
         }
 
         $orders = $this->getDatatableResults(
-            $query->with(['branch', 'createdBy', 'approvedBy']),
+            $query->with(['branch', 'createdBy', 'approvedBy', 'items', 'items.product']),
             'increment_number:DESC',
             ['increment_number', 'custom_number', 'status', 'branch.name', 'createdBy.name'],
             ['increment_number', 'custom_number', 'note', 'status', 'branch.name', 'createdBy.name', 'approvedBy.name', 'created_at']
@@ -44,7 +45,7 @@ class OrderController extends Controller
 
         return Inertia::render('Sales/Orders/Index', [
             'orders' => OrderResource::collection($orders),
-            'branches' => BranchResource::collection($usersBranches),
+            'branches' => BranchOptionResource::collection($usersBranches)->toArray(request()),
         ]);
     }
 

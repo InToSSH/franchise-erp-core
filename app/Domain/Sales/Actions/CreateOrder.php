@@ -6,6 +6,7 @@ namespace App\Domain\Sales\Actions;
 
 use App\Domain\Sales\Enums\OrderStatusEnum;
 use App\Domain\Sales\Models\Order;
+use DB;
 
 class CreateOrder
 {

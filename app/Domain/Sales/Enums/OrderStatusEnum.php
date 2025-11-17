@@ -44,7 +44,7 @@ enum OrderStatusEnum: string
     {
         return [
             'value' => $this->value,
-            'name' => $this->label(),
+            'label' => $this->label(),
         ];
     }
 

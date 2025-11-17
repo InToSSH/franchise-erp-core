@@ -22,6 +22,13 @@ class Product extends Model
         'image_path',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'price' => 'float',
+        ];
+    }
+
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);

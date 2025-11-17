@@ -21,12 +21,16 @@ class OrderResource extends JsonResource
             'custom_number' => $this->custom_number,
             'note' => $this->note,
             'status' => $this->status,
+            'status_option' => $this->status->toOption(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
             'branch_id' => $this->branch_id,
             'created_by' => $this->created_by,
             'approved_by' => $this->approved_by,
+
+            'total_price' => $this->total_price,
+            'items' => OrderItemResource::collection($this->whenLoaded('items')),
 
             'branch' => new BranchResource($this->whenLoaded('branch')),
             'createdBy' => new UserResource($this->whenLoaded('createdBy')),

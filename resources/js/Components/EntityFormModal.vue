@@ -63,7 +63,7 @@ function submitForm() {
         v-on:update:visible="emit('update:visible', $event)"
         modal
         :header="title"
-        class="w-full max-w-4xl"
+        class="w-full max-w-7xl"
         draggable
         maximizable
     >
@@ -72,8 +72,11 @@ function submitForm() {
             <fieldset :disabled="readOnly" class="space-y-4">
             <slot :errors="form.errors" :form="form" :readOnly="readOnly"/>
             <div class="flex justify-end gap-2 mt-6">
-                <Button label="Zrušit" text @click="visible = false" />
-                <Button type="submit" label="Uložit" :loading="form.processing" />
+                <slot name="buttons" :form="form" :visible="visible" :readOnly="readOnly" :submitForm="submitForm">
+                    <!-- Default buttons if no slot provided -->
+                    <Button label="Zrušit" text @click="visible = false" />
+                    <Button type="submit" label="Uložit" :loading="form.processing" />
+                </slot>
             </div>
             </fieldset>
         </form>

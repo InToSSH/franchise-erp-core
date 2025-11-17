@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('status');
             $table->foreignIdFor(Branch::class, 'branch_id')->constrained('branches');
             $table->foreignIdFor(User::class, 'created_by')->constrained('users');
-            $table->foreignIdFor(User::class, 'approved_by')->constrained('users');
+            $table->foreignIdFor(User::class, 'approved_by')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

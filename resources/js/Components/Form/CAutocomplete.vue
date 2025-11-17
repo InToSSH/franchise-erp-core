@@ -15,6 +15,10 @@ const props = defineProps({
         type: Array,
         default: () => []
     },
+    optionLabel: {
+        type: String,
+        default: 'name'
+    }
 })
 
 const model = defineModel()
@@ -52,7 +56,7 @@ const optionSelected = (e) => {
         dropdown
         @complete="search"
         @option-select="optionSelected"
-        option-label="name"
+        :option-label="optionLabel"
         class="w-full"
         force-selection
         :invalid="!!error"

@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->foreignIdFor(Order::class, 'order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignIdFor(Product::class, 'product_id')->constrained('products');
             $table->decimal('quantity', 15, 2);
+            $table->decimal('unit_price', 15, 2);
+            $table->decimal('total_price', 15, 2);
             $table->timestamps();
         });
     }

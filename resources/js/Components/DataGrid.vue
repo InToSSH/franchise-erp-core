@@ -138,7 +138,11 @@ function confirmDelete(model) {
 
             <Column header="Akce" bodyClass="text-center">
                 <template #body="{ data }">
-                    <div class="flex gap-2 justify-center">
+
+                    <div class="flex justify-end">
+                        <slot name="actionsBefore" :data="data">
+                            <!-- Default action buttons if no slot provided -->
+                        </slot>
                         <Button
                             icon="pi pi-pencil"
                             severity="info"
@@ -155,7 +159,11 @@ function confirmDelete(model) {
                             v-if="showDeleteAction && (!deleteAcl || $userCan(deleteAcl))"
                             @click="confirmDelete(data)"
                         />
+                        <slot name="actionsAfter" :data="data">
+                            <!-- Additional actions can be added here -->
+                        </slot>
                     </div>
+
                 </template>
             </Column>
         </DataTable>

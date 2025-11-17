@@ -11,7 +11,7 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
-import { definePreset } from '@primeuix/themes';
+import {definePreset} from '@primeuix/themes';
 import UserCanPlugin from "@/plugins/userCan.js";
 
 
@@ -39,7 +39,7 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({el, App, props, plugin}) {
-        return createApp({render: () => h(App, props)})
+        const app = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(ZiggyVue)
             .use(PrimeVue,
@@ -54,10 +54,22 @@ createInertiaApp({
                 })
             .use(ToastService)
             .use(ConfirmationService)
-            .use(UserCanPlugin)
-            .mount(el);
+            .use(UserCanPlugin);
+
+        app.config.globalProperties.$formatCurrency = (value) => {
+            return new Intl.NumberFormat('cs-CZ', {
+                style: 'currency',
+                currency: 'CZK'
+            }).format(value);
+        };
+
+        app.config.globalProperties.$formatDateTime = (value) => {
+            return new Intl.DateTimeFormat('cs-CZ', {dateStyle: 'medium', timeStyle: 'medium'}).format(new Date(value));
+        };
+
+        return app.mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#005de0',
     },
 });

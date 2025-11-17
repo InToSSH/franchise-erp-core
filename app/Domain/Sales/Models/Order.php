@@ -7,6 +7,7 @@ namespace App\Domain\Sales\Models;
 use App\Domain\Admin\Models\Branch;
 use App\Domain\Sales\Enums\OrderStatusEnum;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -45,5 +46,12 @@ class Order extends Model
     public function approvedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function totalPrice(): Attribute
+    {
+        return Attribute::get(
+            fn () => $this->items()->sum('total_price')
+        );
     }
 }
