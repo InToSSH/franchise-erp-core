@@ -14,7 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'frontend_name' => env('APP_FRONTEND_NAME', 'OOO Pizza'),
+    'vite_app_name' => env('VITE_APP_NAME', 'Franchise ERP'),
+    'company_name' => env('APP_COMPANY_NAME', ''),
 
     /*
     |--------------------------------------------------------------------------

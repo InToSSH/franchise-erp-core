@@ -3,7 +3,7 @@ export default {
         const resolveAbilities = () => {
             // prefer Inertia-provided $page if available, fallback to global window.page
             const page = app.config.globalProperties.$page ?? window.page;
-            return page?.props?.auth?.user?.abilities ?? [];
+            return page?.props?.auth?.user?.abilities_list ?? [];
         };
 
         const can = (ability) => {

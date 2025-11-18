@@ -57,7 +57,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        'abilities',
+        'abilities_list',
     ];
 
     public function managedBranches(): HasMany
@@ -83,7 +83,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function abilities(): Attribute
+    public function abilitiesList(): Attribute
     {
         return new Attribute(
             get: fn () => $this->getAbilities()->pluck('name'),

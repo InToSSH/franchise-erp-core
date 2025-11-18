@@ -2,7 +2,7 @@
     {{-- Header --}}
     <x-slot:header>
         <x-mail::header :url="config('app.url')">
-            {{ config('app.frontend_name') }}
+            {{ config('app.company_name') }}
         </x-mail::header>
     </x-slot:header>
 

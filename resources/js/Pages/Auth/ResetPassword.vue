@@ -1,11 +1,13 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head, Link, useForm} from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Checkbox from "@/Components/Checkbox.vue";
+import AppLayoutPublic from "@/Layouts/AppLayoutPublic.vue";
 
 const props = defineProps({
     email: String,
@@ -27,59 +29,42 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Reset Password" />
+    <Head title="Obnovení hesla" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <form @submit.prevent="submit">
+    <AppLayoutPublic>
+        <div class="flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
             <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <div class="text-center mb-8">
+                    <img src="/img/logo.png" alt="Logo" class="mx-auto mb-4 h-20" />
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Intranet</div>
+                </div>
+
+                <div class="rounded-xl border border-gray-400 p-16 bg-white drop-shadow-lg">
+                    <form @submit.prevent="submit">
+                        <div class="mb-6">
+                            <label for="email" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">E-mail</label>
+                            <InputText id="email" type="text" placeholder="E-mailová adresa" class="w-full md:w-[30rem] mb-2" v-model="form.email" />
+                            <InputError :message="form.errors.email" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Nové heslo</label>
+                            <Password id="password" v-model="form.password" placeholder="Nové heslo" :toggleMask="true" class="mb-2" fluid :feedback="true"></Password>
+                            <InputError :message="form.errors.password" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password_confirmation" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Nové heslo (znovu)</label>
+                            <Password id="password_confirmation" v-model="form.password_confirmation" placeholder="Nové heslo" :toggleMask="true" class="mb-2" fluid :feedback="false"></Password>
+                            <InputError :message="form.errors.password_confirmation" />
+                        </div>
+
+                        <Button label="Nastavit nové heslo" class="w-full" as="router-link" @click.prevent="submit"></Button>
+                    </form>
+                </div>
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
-                </PrimaryButton>
-            </div>
-        </form>
-    </AuthenticationCard>
+        </div>
+    </AppLayoutPublic>
 </template>
+

@@ -19,7 +19,7 @@ pro naši pobočku **{{ $order->branch->name }}** objednáváme následující z
     <tr>
         <td valign="top" width="{{ $order->branch->manager ? '50%' : '100%' }}" style="padding-right:12px;">
             <h2 style="margin:0 0 8px;">Adresa doručení</h2>
-            {{ config('app.frontend_name') }}<br>
+            {{ config('app.company_name') }}<br>
             {{ $order->branch->street }}<br>
             {{ $order->branch->post_code }} {{ $order->branch->city }}<br>
         </td>
@@ -36,5 +36,5 @@ pro naši pobočku **{{ $order->branch->name }}** objednáváme následující z
 @endif
 
 Děkujeme a přejeme pěkný den.<br>
-{{ config('app.frontend_name') }}
+{{ config('app.company_name') }}
 @endcomponent

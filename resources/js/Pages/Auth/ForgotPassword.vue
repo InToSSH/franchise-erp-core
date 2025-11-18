@@ -1,11 +1,13 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head, Link, useForm} from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import AppLayoutPublic from "@/Layouts/AppLayoutPublic.vue";
+import Checkbox from "@/Components/Checkbox.vue";
 
 defineProps({
     status: String,
@@ -21,41 +23,36 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password" />
+    <Head title="Zapomenuté heslo" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+    <AppLayoutPublic>
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-        </div>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
+        <div class="flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
             <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+                <div class="text-center mb-8">
+                    <img src="/img/logo.png" alt="Logo" class="mx-auto mb-4 h-20" />
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Intranet</div>
+                </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
+                <div class="rounded-xl border border-gray-400 p-16 bg-white drop-shadow-lg max-w-2xl">
+                    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                        Zapomněli jste heslo? Žádný problém. Stačí nám sdělit vaši e‑mailovou adresu a my vám pošleme odkaz pro obnovení hesla, který vám umožní zvolit si nové.
+                    </div>
+
+                    <div v-if="status" class="mb-4 font-medium text text-green dark:text-green-500 pb-4">
+                        {{ status }}
+                    </div>
+                    <form @submit.prevent="submit">
+                        <div class="mb-6">
+                            <label for="email" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">E-mail</label>
+                            <InputText id="email" type="text" placeholder="E-mailová adresa" class="w-full mb-2" v-model="form.email" autocomplete="username"/>
+                            <InputError :message="form.errors.email" />
+                        </div>
+
+                        <Button label="Odeslat odkaz pro obnovení hesla" :class="{ 'opacity-25': form.processing, 'w-full': true }" :disabled="form.processing" as="router-link" @click.prevent="submit"></Button>
+                    </form>
+                </div>
             </div>
-        </form>
-    </AuthenticationCard>
+        </div>
+    </AppLayoutPublic>
 </template>

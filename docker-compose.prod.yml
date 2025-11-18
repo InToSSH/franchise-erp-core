@@ -9,16 +9,14 @@ services:
         volumes:
             - app_storage:/app/storage
             - app_cache:/app/bootstrap/cache
-            - app_public:/app/public
         environment:
             DB_HOST: mysql
             DB_PORT: 3306
-            CACHE_STORE: redis
+            CACHE_DRIVER: redis
             SESSION_DRIVER: redis
             QUEUE_CONNECTION: redis
             REDIS_HOST: redis
             REDIS_CLIENT: phpredis
-            ASSET_URL: ${APP_URL}
         depends_on:
             - mysql
             - redis
@@ -29,8 +27,6 @@ services:
             target: nginx
         depends_on:
             - php
-        volumes:
-            - app_public:/app/public
 
     queue:
         build:
@@ -63,6 +59,8 @@ services:
             MYSQL_USER: ${DB_USERNAME}
         volumes:
             - db:/var/lib/mysql
+        networks:
+            - mysql_admin
 
     redis:
         image: redis:latest
@@ -76,4 +74,8 @@ volumes:
     cache:
     app_storage:
     app_cache:
-    app_public:
+
+networks:
+    mysql_admin:
+        external: true
+
