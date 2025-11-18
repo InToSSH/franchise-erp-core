@@ -24,7 +24,8 @@ class OrderPolicy
 
     public function view(User $user, Order $order): bool
     {
-        return $user->can('sales.orders.view');
+        return $user->can('sales.orders.view')
+            && $user->branches->contains('id', $order->branch_id);
     }
 
     public function create(User $user): bool
@@ -34,21 +35,35 @@ class OrderPolicy
 
     public function update(User $user, Order $order): bool
     {
-        return $user->can('sales.orders.edit');
+        return $user->can('sales.orders.edit')
+            && $user->branches->contains('id', $order->branch_id);
     }
 
     public function delete(User $user, Order $order): bool
     {
-        return false;
+        return $user->can('sales.orders.delete');
     }
 
     public function restore(User $user, Order $order): bool
     {
-        return $user->can('sales.orders.edit');
+        return $user->can('sales.orders.edit')
+            && $user->branches->contains('id', $order->branch_id);
     }
 
     public function forceDelete(User $user, Order $order): bool
     {
-        return false;
+        return $user->can('sales.orders.delete');
+    }
+
+    public function cancel(User $user, Order $order): bool
+    {
+        return $user->can('sales.orders.edit')
+            && $user->branches->contains('id', $order->branch_id);
+    }
+
+    public function approve(User $user, Order $order): bool
+    {
+        return $user->can('sales.orders.approve')
+            && $user->branches->contains('id', $order->branch_id);
     }
 }

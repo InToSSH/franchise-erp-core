@@ -137,7 +137,7 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
         :routes="routes"
         :model-id="props.model?.id"
         :initial-values="initialValues"
-        :read-only="!$userCan('sales.orders.edit')"
+        :read-only="!$userCan('sales.orders.edit') || (props.model && !props.model.is_editable)"
         @saved="emit('saved')"
 
     >
@@ -153,10 +153,11 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
                             :error="errors.branch_id"
                             option-label="label"
                             required
+                            autofocus
                         />
                     </div>
                     <div>
-                        <CInputText name="custom_number" label="Vlastní označení" v-model="form.custom_number" :error="errors.custom_number" autofocus />
+                        <CInputText name="custom_number" label="Vlastní označení" v-model="form.custom_number" :error="errors.custom_number"/>
                     </div>
                     <div class="col-span-2">
                         <CInputTextArea name="note" label="Interní poznámka" v-model="form.note" :rows="2" :error="errors.note" />

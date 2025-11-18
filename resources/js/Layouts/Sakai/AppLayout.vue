@@ -10,11 +10,18 @@ import {usePage} from "@inertiajs/vue3";
 
 const toast = useToast();
 
-const { layoutConfig, layoutState, isSidebarActive } = useLayout();
+const page = usePage();
+
+const { layoutConfig, layoutState, isSidebarActive, toggleDarkMode } = useLayout();
+
 
 const outsideClickListener = ref(null);
 
-watch(() => usePage().props.flash, flash => {
+if (page.props.auth.user.dark_mode && layoutConfig.darkTheme === false) {
+    toggleDarkMode()
+}
+
+watch(() => page.props.flash, flash => {
     console.log(flash);
     if (flash.success === null && flash.error === null && flash.message === null) {
         return;
@@ -32,7 +39,7 @@ watch(() => usePage().props.flash, flash => {
         toast.add({severity: 'info', summary: 'Info', detail: flash.message, life: 3000});
     }
 
-    usePage().props.flash = {
+    page.props.flash = {
         success: null,
         error: null,
         message: null

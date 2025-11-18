@@ -1,4 +1,5 @@
 import { computed, reactive } from 'vue';
+import {router, usePage} from "@inertiajs/vue3";
 
 const layoutConfig = reactive({
     preset: 'Aura',
@@ -36,6 +37,13 @@ export function useLayout() {
     const executeDarkModeToggle = () => {
         layoutConfig.darkTheme = !layoutConfig.darkTheme;
         document.documentElement.classList.toggle('app-dark');
+        const page = usePage()
+        let currentDarkMode = page.props.auth.user.dark_mode ?? false;
+        if (currentDarkMode === layoutConfig.darkTheme) {
+            return;
+        }
+
+        axios.put(route('api.user.set-dark-mode'), {enabled: layoutConfig.darkTheme});
     };
 
     const toggleMenu = () => {

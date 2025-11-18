@@ -54,8 +54,8 @@ enum OrderStatusEnum: string
     public function allowedTransitions(): array
     {
         return match ($this) {
-            self::DRAFT => [self::AWAITING_APPROVAL, self::CANCELED],
-            self::AWAITING_APPROVAL => [self::APPROVED, self::CANCELED],
+            self::DRAFT => [self::AWAITING_APPROVAL, self::CANCELED, self::APPROVED],
+            self::AWAITING_APPROVAL => [self::APPROVED, self::CANCELED, self::DRAFT],
             self::APPROVED => [self::ORDERED, self::CANCELED],
             self::ORDERED => [self::DELIVERED, self::CANCELED],
             self::DELIVERED => [],
@@ -63,4 +63,14 @@ enum OrderStatusEnum: string
         };
     }
 
+    /**
+     * Check if transition to given status is allowed
+     *
+     * @param OrderStatusEnum $toStatus
+     * @return bool
+     */
+    public function isTransitionAllowed(OrderStatusEnum $toStatus): bool
+    {
+        return in_array($toStatus, $this->allowedTransitions());
+    }
 }

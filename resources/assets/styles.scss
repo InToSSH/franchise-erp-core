@@ -2,3 +2,7 @@
 @use 'primeicons/primeicons.css';
 @use 'layout/layout';
 @use 'demo/demo';
+
+.p-confirmdialog-message {
+    white-space: pre-line;
+}

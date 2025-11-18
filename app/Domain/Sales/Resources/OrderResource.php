@@ -35,6 +35,9 @@ class OrderResource extends JsonResource
             'branch' => new BranchResource($this->whenLoaded('branch')),
             'createdBy' => new UserResource($this->whenLoaded('createdBy')),
             'approvedBy' => new UserResource($this->whenLoaded('approvedBy')),
+            'approved_at' => $this->approved_at,
+            'is_editable' => $this->is_editable,
+            'is_cancelable' => $this->is_cancelable,
         ];
     }
 }

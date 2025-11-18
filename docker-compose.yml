@@ -7,6 +7,7 @@ services:
         user: application
         env_file:
             - .env.dev
+            - .env
         ports:
             - 8085:80
             - "5173:5173"

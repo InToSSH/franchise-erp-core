@@ -14,7 +14,17 @@
                 @editAction="openEdit"
                 delete-acl="catalog.suppliers.edit"
             >
-                <Column field="name" header="Název" sortable />
+                <Column field="name" header="Název" sortable>
+                    <template #body="{ data }">
+                        <a
+                            href="#"
+                            class="text-blue-600 hover:underline"
+                            @click.prevent="openEdit(data)"
+                        >
+                            {{ data.name }}
+                        </a>
+                    </template>
+                </Column>
                 <Column field="code" header="Kód" sortable />
                 <Column field="contact_person" header="Kontaktní osoba" />
                 <Column field="email" header="Email" sortable />

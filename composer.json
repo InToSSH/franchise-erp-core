@@ -11,10 +11,14 @@
         "kalnoy/nestedset": "^6.0",
         "laravel-lang/common": "^6.7",
         "laravel/framework": "^12.0",
+        "laravel/horizon": "^5.40",
         "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",
+        "laravel/telescope": "^5.15",
         "laravel/tinker": "^2.10.1",
         "silber/bouncer": "^1.0",
+        "symfony/http-client": "^7.3",
+        "symfony/postmark-mailer": "^7.3",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
@@ -68,7 +72,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

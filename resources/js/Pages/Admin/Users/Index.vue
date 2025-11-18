@@ -7,14 +7,23 @@
                 <Button label="Přidat uživatele" icon="pi pi-plus" @click="openCreate" v-if="$userCan('admin.users.edit')"/>
             </div>
 
-
             <DataGrid
                 :resource="users"
                 route-prefix="admin.users"
                 @editAction="openEdit"
                 delete-acl="admin.users.edit"
             >
-                <Column field="name" header="Název" sortable />
+                <Column field="name" header="Jméno" sortable>
+                    <template #body="{ data }">
+                        <a
+                            href="#"
+                            class="text-blue-600 hover:underline"
+                            @click.prevent="openEdit(data)"
+                        >
+                            {{ data.name }}
+                        </a>
+                    </template>
+                </Column>
                 <Column field="email" header="Email" sortable />
                 <Column field="phone" header="Telefon" sortable />
                 <Column field="branches" header="Pobočky">

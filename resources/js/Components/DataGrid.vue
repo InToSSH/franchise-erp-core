@@ -144,7 +144,7 @@ function confirmDelete(model) {
                             <!-- Default action buttons if no slot provided -->
                         </slot>
                         <Button
-                            icon="pi pi-pencil"
+                            :icon="data.is_editable !== false ? 'pi pi-pencil' : 'pi pi-eye'"
                             severity="info"
                             rounded
                             text

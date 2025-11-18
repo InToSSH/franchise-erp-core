@@ -26,6 +26,7 @@ class Order extends Model
 
     protected $casts = [
         'status' => OrderStatusEnum::class,
+        'approved_at' => 'datetime',
     ];
 
     public function branch(): BelongsTo
@@ -48,10 +49,29 @@ class Order extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    public function orderMail(): HasMany
+    {
+        return $this->hasMany(OrderMail::class);
+    }
+
     public function totalPrice(): Attribute
     {
         return Attribute::get(
             fn () => $this->items()->sum('total_price')
+        );
+    }
+
+    public function isEditable(): Attribute
+    {
+        return Attribute::get(
+            fn () => in_array($this->status, [OrderStatusEnum::DRAFT])
+        );
+    }
+
+    public function isCancelable(): Attribute
+    {
+        return Attribute::get(
+            fn () => in_array($this->status, [OrderStatusEnum::DRAFT, OrderStatusEnum::AWAITING_APPROVAL])
         );
     }
 }

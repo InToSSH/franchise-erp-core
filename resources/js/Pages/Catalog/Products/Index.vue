@@ -23,7 +23,17 @@
                                 <img :src="route('assets.images', {path: slotProps.data.image_path})" :alt="slotProps.data.image" class="w-28 rounded" />
                             </template>
                         </Column>
-                        <Column field="name" header="Název" sortable />
+                        <Column field="name" header="Název" sortable>
+                            <template #body="{ data }">
+                                <a
+                                    href="#"
+                                    class="text-blue-600 hover:underline"
+                                    @click.prevent="openEdit(data)"
+                                >
+                                    {{ data.name }}
+                                </a>
+                            </template>
+                        </Column>
                         <Column field="sku" header="SKU" sortable />
                         <Column field="category.name" header="Kategorie" />
                         <Column field="supplier.name" header="Dodavatel" />

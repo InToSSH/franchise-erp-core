@@ -8,11 +8,18 @@ use App\Domain\Admin\Models\Branch;
 use App\Domain\Admin\Resources\BranchOptionResource;
 use App\Domain\Admin\Resources\BranchResource;
 use App\Domain\Sales\Actions\CreateOrder;
+use App\Domain\Sales\Actions\OrderStatuses\ApproveOrder;
+use App\Domain\Sales\Actions\OrderStatuses\CancelOrder;
+use App\Domain\Sales\Actions\OrderStatuses\ReturnOrderToDraft;
+use App\Domain\Sales\Actions\OrderStatuses\SetOrderForApproval;
 use App\Domain\Sales\Actions\UpdateOrder;
 use App\Domain\Sales\Models\Order;
 use App\Domain\Sales\Requests\OrderRequest;
 use App\Domain\Sales\Resources\OrderResource;
+use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
+use InvalidArgumentException;
+use Session;
 
 class OrderController extends Controller
 {
@@ -75,5 +82,62 @@ class OrderController extends Controller
 //        $order->delete();
 //
 //        return response()->json();
+    }
+
+    public function approve(Order $order, ApproveOrder $approveOrder)
+    {
+        $this->authorize('approve', $order);
+        try {
+            $approveOrder->execute($order);
+        } catch (InvalidArgumentException $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect()->back();
+        }
+
+        Session::flash('success', __('Objednávka byla schválena a bude odeslána dodavatelům.'));
+        return redirect()->back();
+    }
+
+    public function returnToDraft(Order $order, ReturnOrderToDraft $returnOrderToDraft)
+    {
+        $this->authorize('approve', $order);
+        try {
+            $returnOrderToDraft->execute($order);
+        } catch (InvalidArgumentException $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect()->back();
+        }
+
+        Session::flash('success', __('Objednávka byla vrácena do stavu koncept.'));
+        return redirect()->back();
+    }
+
+    public function setForApproval(Order $order, SetOrderForApproval $setOrderForApproval)
+    {
+        $this->authorize('approve', $order);
+        try {
+            $setOrderForApproval->execute($order);
+        } catch (InvalidArgumentException $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect()->back();
+        }
+
+        Session::flash('success', __('Objednávka byla odeslána ke schválení.'));
+        return redirect()->back();
+    }
+
+    public function cancel(Order $order, CancelOrder $cancelOrder)
+    {
+        $this->authorize('cancel', $order);
+
+        try {
+            $cancelOrder->execute($order);
+        } catch (InvalidArgumentException $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect()->back();
+        }
+
+        Session::flash('success', __('Objednávka byla zrušena.'));
+        return redirect()->back();
     }
 }
