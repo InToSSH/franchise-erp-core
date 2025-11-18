@@ -35,7 +35,7 @@ class SendOrderToSuppliers
                 [
                     'recipient_email' => $supplier->email,
                     'mailable_class' => OrderToSupplierMail::class,
-                    'email_content' => [
+                    'email_content' => json_encode([
                         'supplier_id' => $supplier->id,
                         'items_count' => $items->count(),
                         'items' => $items->map(fn($item) => [
@@ -44,7 +44,7 @@ class SendOrderToSuppliers
                             'unit_price' => $item->unit_price,
                             'total_price' => $item->total_price,
                         ]),
-                    ],
+                    ]),
                 ]
             );
 
