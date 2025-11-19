@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+    php:
+        build:
+            context: .
+            target: php
+        restart: unless-stopped
+        volumes:
+            - app_storage:/app/storage
+            - app_cache:/app/bootstrap/cache
+        environment:
+            DB_HOST: mysql
+            DB_PORT: 3306
+            CACHE_DRIVER: redis
+            SESSION_DRIVER: redis
+            QUEUE_CONNECTION: redis
+            REDIS_HOST: redis
+            REDIS_CLIENT: phpredis
+        depends_on:
+            - mysql
+            - redis
+
+    nginx:
+        build:
+            context: .
+            target: nginx
+        depends_on:
+            - php
+
+    queue:
+        build:
+            context: .
+            target: php
+        entrypoint: [ "/entrypoint-queue.sh" ]
+        environment:
+            DB_HOST: mysql
+            DB_PORT: 3306
+            CACHE_DRIVER: redis
+            SESSION_DRIVER: redis
+            QUEUE_CONNECTION: redis
+            REDIS_HOST: redis
+            REDIS_CLIENT: phpredis
+        depends_on:
+            - php
+            - redis
+        volumes:
+            - app_storage:/app/storage
+            - app_cache:/app/bootstrap/cache
+        restart: unless-stopped
+
+    mysql:
+        image: mysql:8.0
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        volumes:
+            - db:/var/lib/mysql
+        networks:
+            - mysql_admin
+
+    redis:
+        image: redis:latest
+        command: redis-server --save 20 1 --loglevel warning
+        restart: unless-stopped
+        volumes:
+            - cache:/data
+
+volumes:
+    db:
+    cache:
+    app_storage:
+    app_cache:
+
+networks:
+    mysql_admin:
+        external: true
+

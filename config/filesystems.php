@@ -37,7 +37,13 @@ return [
             'throw' => false,
             'report' => false,
         ],
-
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images'),
+            'serve' => true,
+            'throw' => false,
+            'report' => false,
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'vite_app_name' => env('VITE_APP_NAME', 'Franchise ERP'),
+    'company_name' => env('APP_COMPANY_NAME', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +80,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'cs'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
