@@ -72,9 +72,9 @@ RUN npm run build
 # PRODUCTION PHP-FPM
 # ==================================================
 FROM base AS php
-COPY --from=build /app/vendor /app/vendor
-COPY --from=build /app/public/build /app/public/build
 COPY --chown=laravel:laravel . .
+COPY --from=build --chown=laravel:laravel /app/vendor /app/vendor
+COPY --from=build --chown=laravel:laravel /app/public/build /app/public/build
 RUN composer dump-autoload --optimize
 
 COPY --chown=laravel:laravel docker/production/entrypoint.sh /entrypoint.sh
