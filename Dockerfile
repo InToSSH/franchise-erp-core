@@ -29,13 +29,13 @@ WORKDIR /app
 
 # Install PHP extensions
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev libzip-dev libonig-dev libicu-dev libpng-dev libsodium-dev curl \
+    git unzip libpq-dev libzip-dev libonig-dev libicu-dev libpng-dev libsodium-dev libfreetype6-dev libjpeg62-turbo-dev libwebp-dev libavif-dev libxpm-dev curl \
      && docker-php-ext-configure gd \
-                --with-freetype \
-                --with-jpeg \
-                --with-webp \
-                --with-avif \
-                --with-xpm \
+            --with-freetype \
+            --with-jpeg \
+            --with-webp \
+            --with-avif \
+            --with-xpm \
     && docker-php-ext-install pdo pdo_mysql zip intl gd bcmath pcntl exif opcache sodium \
     && rm -rf /var/lib/apt/lists/*
 
