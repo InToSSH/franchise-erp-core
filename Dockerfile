@@ -30,6 +30,12 @@ WORKDIR /app
 # Install PHP extensions
 RUN apt-get update && apt-get install -y \
     git unzip libpq-dev libzip-dev libonig-dev libicu-dev libpng-dev libsodium-dev curl \
+     && docker-php-ext-configure gd \
+                --with-freetype \
+                --with-jpeg \
+                --with-webp \
+                --with-avif \
+                --with-xpm \
     && docker-php-ext-install pdo pdo_mysql zip intl gd bcmath pcntl exif opcache sodium \
     && rm -rf /var/lib/apt/lists/*
 
@@ -37,6 +43,8 @@ RUN pecl install --onlyreqdeps --force redis \
 && rm -rf /tmp/pear \
 && docker-php-ext-enable redis
 
+COPY docker/production/php/php.ini /usr/local/etc/php/conf.d/99-customphp.ini
+COPY docker/production/php/php-fpm.conf /usr/local/etc/php-fpm.d/zz-custom.conf
 COPY docker/production/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # Install Composer
@@ -75,7 +83,8 @@ FROM base AS php
 COPY --chown=laravel:laravel . .
 COPY --from=build --chown=laravel:laravel /app/vendor /app/vendor
 COPY --from=build --chown=laravel:laravel /app/public/build /app/public/build
-RUN composer dump-autoload --optimize
+RUN ls -al /app && ls -al /app/vendor
+RUN composer dump-autoload --optimize -vvv
 
 COPY --chown=laravel:laravel docker/production/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
