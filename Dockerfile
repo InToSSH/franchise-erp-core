@@ -83,11 +83,11 @@ FROM base AS php
 COPY --chown=laravel:laravel . .
 COPY --from=build --chown=laravel:laravel /app/vendor /app/vendor
 COPY --from=build --chown=laravel:laravel /app/public/build /app/public/build
-RUN ls -al /app && ls -al /app/vendor
-RUN composer dump-autoload --optimize -vvv
+RUN composer dump-autoload --optimize
 
 COPY --chown=laravel:laravel docker/production/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY --chown=laravel:laravel docker/production/entrypoint-queue.sh /entrypoint-queue.sh
+RUN chmod +x /entrypoint.sh /entrypoint-queue.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
