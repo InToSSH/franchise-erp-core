@@ -54,7 +54,9 @@ services:
         restart: unless-stopped
 
     mysql:
-        image: mysql:8.0
+        build:
+            context: .
+            dockerfile: docker/production/mysql/Dockerfile
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
@@ -63,7 +65,6 @@ services:
             MYSQL_USER: ${DB_USERNAME}
         volumes:
             - db:/var/lib/mysql
-            - /app/docker/production/mysql/init:/docker-entrypoint-initdb.d
         networks:
             - mysql_admin
         healthcheck:
