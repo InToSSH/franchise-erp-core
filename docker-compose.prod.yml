@@ -68,7 +68,7 @@ services:
         networks:
             - mysql_admin
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uhealth", "-phealthpass"]
+            test: ["CMD-SHELL", "mysqladmin --user=$${MYSQL_USER} --password=$${MYSQL_PASSWORD} --host=localhost ping"]
             interval: 5s
             timeout: 5s
             retries: 10
