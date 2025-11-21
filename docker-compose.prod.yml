@@ -63,7 +63,7 @@ services:
             MYSQL_USER: ${DB_USERNAME}
         volumes:
             - db:/var/lib/mysql
-            - ./docker/production/mysql/init:/docker-entrypoint-initdb.d
+            - /app/docker/production/mysql/init:/docker-entrypoint-initdb.d
         networks:
             - mysql_admin
         healthcheck:
