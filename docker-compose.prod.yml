@@ -18,8 +18,10 @@ services:
             REDIS_HOST: redis
             REDIS_CLIENT: phpredis
         depends_on:
-            - mysql
-            - redis
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_started
 
     nginx:
         build:
@@ -42,8 +44,10 @@ services:
             REDIS_HOST: redis
             REDIS_CLIENT: phpredis
         depends_on:
-            - php
-            - redis
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_started
         volumes:
             - app_storage:/app/storage
             - app_cache:/app/bootstrap/cache
@@ -59,8 +63,14 @@ services:
             MYSQL_USER: ${DB_USERNAME}
         volumes:
             - db:/var/lib/mysql
+            - ./docker/production/mysql/init:/docker-entrypoint-initdb.d
         networks:
             - mysql_admin
+        healthcheck:
+            test: ["CMD", "mysqladmin ping -h 127.0.0.1 -uhealth -phealthpass"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
 
     redis:
         image: redis:latest
