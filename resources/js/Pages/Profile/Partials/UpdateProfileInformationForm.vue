@@ -78,11 +78,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Informace o profilu
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Aktualizujte informace o svém profilu.
         </template>
 
         <template #form>
@@ -130,29 +130,15 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="name"
-                />
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputLabel for="name" value="Jméno" />
+                <InputText id="name" type="text" placeholder="Jméno" class="mt-1 block w-full" v-model="form.name" />
+                <InputError :message="form.errors.name" />
             </div>
 
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
+                <InputLabel for="email" value="Email (pouze čtení)" />
+                <InputText id="email" type="text" placeholder="Email" class="mt-1 block w-full" v-model="form.email" readonly disabled/>
                 <InputError :message="form.errors.email" class="mt-2" />
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
@@ -179,11 +165,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                Uloženo.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Uložit
             </PrimaryButton>
         </template>
     </FormSection>

@@ -38,7 +38,7 @@ const props = defineProps({
     maxFractionDigits: {
         type: Number,
         default: undefined
-    }
+    },
 })
 
 const model = defineModel()

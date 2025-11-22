@@ -20,6 +20,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    showClear: {
+        type: Boolean,
+        default: true
+    },
 })
 
 const model = defineModel()
@@ -28,9 +32,11 @@ watch(model, (newValue) => {
     selectedCategory.value = newValue ? { [newValue]: true } : null;
 }, { immediate: true })
 const optionSelected = (e) => {
-    model.value = e.key ? e.key : null;
+    model.value = e ? Object.keys(e)[0] : null;
+    emit('selected', model.value);
 };
 
+const emit = defineEmits(['selected'])
 </script>
 
 <template>
@@ -41,9 +47,10 @@ const optionSelected = (e) => {
         :options="categories"
         class="w-full"
         :invalid="!!error"
-        @node-select="optionSelected"
+        @value-change="optionSelected"
         :disabled="readOnly"
         filter
+        :show-clear="showClear"
         filterMode="lenient"
     />
     <small v-if="error" class="text-red-500">{{ error }}</small>

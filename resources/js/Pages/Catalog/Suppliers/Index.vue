@@ -1,12 +1,12 @@
 <template>
     <AppLayout>
         <div class="p-6 space-y-4">
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Dodavatelé</h1>
-                <Button label="Přidat dodavatele" icon="pi pi-plus" @click="openCreate" v-if="$userCan('catalog.suppliers.edit')"/>
-            </div>
-
+            <PageHeader
+                title="Dodavatelé"
+                new-btn-title="Přidat dodavatele"
+                new-btn-acl="catalog.suppliers.edit"
+                @click:new="openCreate"
+            />
 
             <DataGrid
                 :resource="suppliers"
@@ -47,6 +47,7 @@ import AppLayout from '@/Layouts/Sakai/AppLayout.vue';
 import SupplierForm from "@/Components/Supplier/SupplierForm.vue";
 import {ref} from 'vue'
 import DataGrid from "@/Components/DataGrid.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     suppliers: Object,

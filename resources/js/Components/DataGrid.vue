@@ -99,7 +99,7 @@ function confirmDelete(model) {
 <template>
     <div class="space-y-4">
         <!-- Search -->
-        <div class="flex items-center gap-2 max-w-sm">
+        <div class="flex items-center gap-2 lg:max-w-sm">
             <IconField>
                 <InputIcon>
                     <i class="pi pi-search" />

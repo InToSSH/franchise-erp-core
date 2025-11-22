@@ -38,7 +38,7 @@ const defaultValues = {
     description: '',
     weight: '',
     price: '',
-    qty_in_pack: '',
+    qty_in_pack: 1,
     image: '',
     image_path: '',
 }
@@ -101,7 +101,7 @@ const initialValues = computed(() => ({
                     <CInputNumber name="weight" :min-fraction-digits="3" label="Váha" suffix=" kg" v-model="form.weight"  :error="errors.weight" />
                 </div>
                 <div>
-                    <CInputNumber name="qty_in_pack" label="Ks v balení" v-model="form.qty_in_pack"  :error="errors.qty_in_pack" />
+                    <CInputNumber name="qty_in_pack" label="Ks v balení" v-model="form.qty_in_pack" :default-value="1" :error="errors.qty_in_pack" />
                 </div>
                 <Divider class="md:col-span-2"/>
                 <div v-if="$userCan('catalog.products.edit')">

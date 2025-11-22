@@ -14,7 +14,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
             <Link href="/" class="layout-topbar-logo">
                 <img src="/img/logo.png" class="max-h-10">
 
-                <span>Intranet</span>
+                <span class="hidden md:inline">Intranet</span>
             </Link>
         </div>
 
@@ -28,7 +28,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
             <button
                 class="layout-topbar-menu-button layout-topbar-action"
-                v-styleclass="{ selector: '@next', enterFromClass: 'hidden', enterActiveClass: 'animate-scalein', leaveToClass: 'hidden', leaveActiveClass: 'animate-fadeout', hideOnOutsideClick: true }"
+                v-styleclass="{ selector: '@next', toggleClass: 'hidden' }"
             >
                 <i class="pi pi-ellipsis-v"></i>
             </button>
@@ -43,21 +43,20 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 <!--                        <i class="pi pi-inbox"></i>-->
 <!--                        <span>Messages</span>-->
 <!--                    </button>-->
-<!--                    <button type="button" class="layout-topbar-action">-->
-<!--                        <i class="pi pi-user"></i>-->
-<!--                        <span>Profile</span>-->
-<!--                    </button>-->
-                    <div class="ml-3  flex items-center self-center h-full">
+
+                    <div class="ml-3  flex items-center lg:self-center font-semibold h-full">
                         <div>
                             {{ $page.props.auth.user.name }}
                         </div>
                     </div>
+                    <button type="button" class="layout-topbar-action" @click="$inertia.visit(route('profile.show'))">
+                        <i class="pi pi-user"></i>
+                        <span>Nastavení účtu</span>
+                    </button>
                     <button type="button" class="layout-topbar-action" @click="$inertia.post(route('logout'))">
                         <i class="pi pi-sign-out"></i>
-                        <span>Logout</span>
+                        <span>Odhlásit</span>
                     </button>
-                    <!-- Name of the user vertically centered -->
-
                 </div>
             </div>
         </div>

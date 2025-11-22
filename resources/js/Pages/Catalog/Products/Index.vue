@@ -1,17 +1,25 @@
 <template>
     <AppLayout>
         <div class="p-6 space-y-4">
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Produkty</h1>
-                <Button label="Přidat produkt" icon="pi pi-plus" @click="openCreate" v-if="$userCan('catalog.products.edit')"/>
+            <PageHeader
+                title="Produkty"
+                new-btn-title="Přidat produkt"
+                new-btn-acl="catalog.products.edit"
+                @click:new="openCreate"
+            />
+            <div class="lg:hidden">
+                <CategoryTreeSelect
+                    name="category_id"
+                    label="Zobrazená kategorie"
+                    show-clear
+                    @selected="categorySelected"
+                />
             </div>
-
             <div class="grid grid-cols-10 gap-2">
-                <div class="col-span-2 font-semibold">
+                <div class="col-span-2 font-semibold hidden lg:block">
                     <CategorySelectTree :expanded="true" @selected="categorySelected"></CategorySelectTree>
                 </div>
-                <div class="col-span-8">
+                <div class="col-span-10 lg:col-span-8">
                     <DataGrid
                         :resource="products"
                         route-prefix="catalog.products"
@@ -66,6 +74,8 @@ import DataGrid from "@/Components/DataGrid.vue";
 import CategorySelectTree from "@/Components/Category/CategorySelectTree.vue";
 import {router} from "@inertiajs/vue3";
 import ProductForm from "@/Components/Product/ProductForm.vue";
+import PageHeader from "@/Components/PageHeader.vue";
+import CategoryTreeSelect from "@/Components/Form/CategoryTreeSelect.vue";
 
 const props = defineProps({
     products: Object,

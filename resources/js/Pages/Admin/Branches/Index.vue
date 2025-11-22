@@ -1,11 +1,12 @@
 <template>
     <AppLayout>
         <div class="p-6 space-y-4">
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Pobočky</h1>
-                <Button label="Přidat pobočku" icon="pi pi-plus" @click="openCreate" v-if="$userCan('admin.branches.edit')"/>
-            </div>
+            <PageHeader
+                title="Pobočky"
+                new-btn-title="Vytvořit pobočku"
+                new-btn-acl="admin.branches.edit"
+                @click:new="openCreate"
+            />
 
 
             <DataGrid
@@ -56,6 +57,7 @@ import AppLayout from '@/Layouts/Sakai/AppLayout.vue';
 import {ref} from 'vue'
 import DataGrid from "@/Components/DataGrid.vue";
 import BranchForm from "@/Components/Branch/BranchForm.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     branches: Object,
