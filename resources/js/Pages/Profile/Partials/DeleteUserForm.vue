@@ -40,40 +40,40 @@ const closeModal = () => {
 <template>
     <ActionSection>
         <template #title>
-            Delete Account
+            Smazat účet
         </template>
 
         <template #description>
-            Permanently delete your account.
+            Trvale smazat váš účet.
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+            <div class="max-w-xl text-sm">
+                Jakmile bude váš účet smazán, všechny jeho zdroje a data budou trvale odstraněny. Před smazáním účtu si prosím stáhněte všechna data nebo informace, které si přejete zachovat.
             </div>
 
             <div class="mt-5">
                 <DangerButton @click="confirmUserDeletion">
-                    Delete Account
+                    Smazat účet
                 </DangerButton>
             </div>
 
             <!-- Delete Account Confirmation Modal -->
             <DialogModal :show="confirmingUserDeletion" @close="closeModal">
                 <template #title>
-                    Delete Account
+                    Smazat účet
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                    Opravdu chcete smazat svůj účet? Jakmile bude váš účet smazán, všechny jeho zdroje a data budou trvale odstraněny. Zadejte prosím své heslo, abyste potvrdili, že chcete svůj účet trvale smazat.
 
                     <div class="mt-4">
-                        <TextInput
+                        <InputText
                             ref="passwordInput"
                             v-model="form.password"
                             type="password"
                             class="mt-1 block w-3/4"
-                            placeholder="Password"
+                            placeholder="Heslo"
                             autocomplete="current-password"
                             @keyup.enter="deleteUser"
                         />
@@ -84,7 +84,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <SecondaryButton @click="closeModal">
-                        Cancel
+                        Zrušit
                     </SecondaryButton>
 
                     <DangerButton
@@ -93,7 +93,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        Delete Account
+                        Smazat účet
                     </DangerButton>
                 </template>
             </DialogModal>

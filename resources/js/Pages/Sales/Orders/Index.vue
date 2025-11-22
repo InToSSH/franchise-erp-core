@@ -2,11 +2,12 @@
     <AppLayout>
         <div class="p-6 space-y-4">
             <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Objednávky</h1>
-                <Button label="Vytvořit objednávku" icon="pi pi-plus" @click="openCreate" v-if="$userCan('sales.orders.edit')"/>
-            </div>
-
+            <PageHeader
+                title="Objednávky"
+                new-btn-title="Vytvořit objednávku"
+                new-btn-acl="sales.orders.edit"
+                @click:new="openCreate"
+            />
 
             <DataGrid
                 :resource="orders"
@@ -107,6 +108,7 @@ import DataGrid from "@/Components/DataGrid.vue";
 import OrderForm from "@/Components/Order/OrderForm.vue";
 import {router} from "@inertiajs/vue3";
 import {useConfirm} from "primevue";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     orders: Object,

@@ -143,7 +143,7 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
     >
         <template #default="{ errors, form }">
             <div class="grid gap-4">
-                <div class="grid md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                         <CAutocomplete
                             name="branch_id"
@@ -159,12 +159,12 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
                     <div>
                         <CInputText name="custom_number" label="Vlastní označení" v-model="form.custom_number" :error="errors.custom_number"/>
                     </div>
-                    <div class="col-span-2">
+                    <div class="col-span-1 lg:col-span-2">
                         <CInputTextArea name="note" label="Interní poznámka" v-model="form.note" :rows="2" :error="errors.note" />
                     </div>
                 </div>
                 <Divider/>
-                <div class="order-items-section">
+                <div class="order-items-section max-w-[90vw]">
                     <div class="flex justify-between items-center mb-3">
                         <h4 class="text-lg font-semibold">Položky objednávky</h4>
                         <Button
@@ -175,21 +175,21 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
                             :disabled="!$userCan('sales.orders.edit')"
                         />
                     </div>
-
-                    <DataTable :value="form.items" class="p-datatable-sm">
-                        <Column header="#" style="width: 50px">
+                    <DataTable :value="form.items"  class="p-datatable-sm" id="dt-responsive-table">
+                        <Column header="#">
                             <template #body="{ index }">
                                 {{ index + 1 }}
                             </template>
                         </Column>
-                        <Column header="" style="width: 80px">
+                        <Column header="">
                             <template #body="{ data }">
                                 <img v-if="data.product && data.product.image_path" :src="route('assets.images', { path: data.product.image_path })" alt="" class="w-12 h-12 object-cover rounded" />
                                 <img v-else src="/img/no-img.png" alt="" class="w-12 h-12 object-cover rounded" />
                             </template>
                         </Column>
-                        <Column header="Produkt *" style="min-width: 300px">
+                        <Column header="Produkt *" class="md:w-[50%]">
                             <template #body="{ data, index }">
+                                <div class="font-semibold pb-1 lg:hidden">Produkt</div>
                                 <CAutocompleteLazy
                                     :name="`items.${index}.product`"
                                     route="api.catalog.products.search"
@@ -212,30 +212,34 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
                             </template>
                         </Column>
 
-                        <Column header="Množství *" style="width: 120px">
+                        <Column header="Množství *" class="w-full md:w-1">
                             <template #body="{ data, index }">
+                                <div class="font-semibold pb-1 lg:hidden">Množství</div>
                                 <InputNumber
                                     v-model="data.quantity"
                                     @update:modelValue="calculateTotal(data)"
                                     :min="1"
+                                    class="w-full"
                                     :class="{ 'p-invalid': errors[`items.${index}.quantity`] }"
                                 />
                             </template>
                         </Column>
 
-                        <Column header="Jedn. cena" style="width: 120px">
+                        <Column header="Jedn. cena">
                             <template #body="{ data }">
+                                <div class="font-semibold pb-1 lg:hidden">Jedn. cena</div>
                                 {{ $formatCurrency(data.unit_price) }}
                             </template>
                         </Column>
 
-                        <Column header="Celkem" style="width: 120px">
+                        <Column header="Celkem">
                             <template #body="{ data }">
+                                <div class="font-semibold pb-1 lg:hidden">Celkem</div>
                                 {{ $formatCurrency(data.total_price) }}
                             </template>
                         </Column>
 
-                        <Column style="width: 80px">
+                        <Column>
                             <template #body="{ index }">
                                 <Button
                                     icon="pi pi-trash"
@@ -247,6 +251,8 @@ const confirmSubmitAndApprove = (form, submitFormParent) => {
                             </template>
                         </Column>
                     </DataTable>
+
+
                     <!-- Add total price of the order -->
                     <div class="flex justify-end mt-4">
                     <span class="font-semibold text-lg">

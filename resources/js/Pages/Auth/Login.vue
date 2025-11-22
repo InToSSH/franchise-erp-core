@@ -28,14 +28,14 @@ const submit = () => {
 <template>
     <Head title="Log in" />
     <AppLayoutPublic>
-        <div class="flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+        <div class="flex mt-5 lg:mt-0 lg:items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
             <div>
                 <div class="text-center mb-8">
                     <img src="/img/logo.png" alt="Logo" class="mx-auto mb-4 h-20" />
                     <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Intranet</div>
                 </div>
 
-                <div class="rounded-xl border border-gray-400 p-16 bg-white drop-shadow-lg">
+                <div class="rounded-xl m-1 border border-gray-400 p-5 lg:p-16 w-full bg-white drop-shadow-lg">
                     <div v-if="status" class="mb-4 font-medium text text-green dark:text-green-500 pb-4">
                         {{ status }}
                     </div>

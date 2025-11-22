@@ -1,11 +1,12 @@
 <template>
     <AppLayout>
         <div class="p-6 space-y-4">
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Uživatelé</h1>
-                <Button label="Přidat uživatele" icon="pi pi-plus" @click="openCreate" v-if="$userCan('admin.users.edit')"/>
-            </div>
+            <PageHeader
+                title="Uživatelé"
+                new-btn-title="Přidat uživatele"
+                new-btn-acl="admin.users.edit"
+                @click:new="openCreate"
+            />
 
             <DataGrid
                 :resource="users"
@@ -68,6 +69,7 @@ import AppLayout from '@/Layouts/Sakai/AppLayout.vue';
 import {ref} from 'vue'
 import DataGrid from "@/Components/DataGrid.vue";
 import UserForm from "@/Components/User/UserForm.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     users: Object,

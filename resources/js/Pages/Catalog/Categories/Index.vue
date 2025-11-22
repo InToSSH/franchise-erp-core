@@ -2,11 +2,12 @@
     <AppLayout>
         <Head title="Kategorie" />
         <div class="p-6 space-y-4">
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold">Kategorie</h1>
-                <Button label="Přidat kategorii" icon="pi pi-plus" @click="openCreate" v-if="$userCan('catalog.categories.edit')"/>
-            </div>
+            <PageHeader
+                title="Kategorie"
+                new-btn-title="Přidat kategorii"
+                new-btn-acl="catalog.categories.edit"
+                @click:new="openCreate"
+            />
             <div>
                 <div class="flex flex-wrap gap-2 mb-6">
                     <Button type="button" icon="pi pi-plus" label="Rozbalit vše" @click="expandAll" />
@@ -59,6 +60,7 @@ import {Head, router} from "@inertiajs/vue3";
 import {useToast} from "primevue/usetoast";
 import CategoryForm from "@/Components/Category/CategoryForm.vue";
 import {useConfirm} from "primevue";
+import PageHeader from "@/Components/PageHeader.vue";
 const props = defineProps({
     categories: Array,
 })
