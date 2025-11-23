@@ -46,7 +46,6 @@
         <CategoryForm
             v-model:visible="showForm"
             :model="editingModel"
-            :additional-data="{ parent_id: 2 }"
         />
         <ConfirmDialog></ConfirmDialog>
 

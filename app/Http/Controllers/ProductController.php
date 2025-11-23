@@ -72,8 +72,6 @@ class ProductController extends Controller
     {
         $this->authorize('delete', $product);
 
-        $product->delete();
-
-        return response()->json();
+        return $this->destroyModel($product);
     }
 }

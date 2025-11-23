@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\GenerateEntityCode;
+use App\Domain\Admin\Models\Branch;
 use App\Domain\Catalog\Requests\SupplierRequest;
 use App\Domain\Catalog\Resources\SupplierResource;
 use App\Domain\Catalog\Models\Supplier;
@@ -30,11 +32,16 @@ class SupplierController extends Controller
         );
     }
 
-    public function store(SupplierRequest $request)
+    public function store(SupplierRequest $request, GenerateEntityCode $generateEntityCode)
     {
         $this->authorize('create', Supplier::class);
 
-        Supplier::create($request->validated());
+        $data = $request->validated();
+        if (empty($data['code'])) {
+            $data['code'] = $generateEntityCode->execute(Branch::class, 'code', $data['name']);
+        }
+
+        Supplier::create($data);
     }
 
     public function show(Supplier $supplier)
