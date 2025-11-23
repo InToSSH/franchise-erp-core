@@ -19,6 +19,7 @@ class BranchResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
+            'manager_id' => $this->manager_id,
             'manager' => new UserResource($this->whenLoaded('manager')),
             'users' => UserOptionResource::collection($this->whenLoaded('users')),
             'email' => $this->email,

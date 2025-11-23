@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Produkty">
         <div class="p-6 space-y-4">
             <PageHeader
                 title="Produkty"

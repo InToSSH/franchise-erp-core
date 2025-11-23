@@ -2,10 +2,15 @@
 import { computed } from 'vue'
 import EntityFormModal from '@/Components/EntityFormModal.vue'
 import CInputText from '@/Components/Form/CInputText.vue'
+import CAutocomplete from "@/Components/Form/CAutocomplete.vue";
 
 const props = defineProps({
     visible: Boolean,
     model: Object,
+    users: {
+        type: Array,
+        default: () => [],
+    },
 })
 
 const emit = defineEmits(['update:visible', 'saved'])
@@ -29,6 +34,7 @@ const defaultValues = {
     street: '',
     city: '',
     post_code: '',
+    manager_id: null
 }
 
 const initialValues = computed(() => ({
@@ -58,6 +64,18 @@ const initialValues = computed(() => ({
                     <CInputText name="code" label="Kód (pro importy)" v-model="form.code" :error="errors.code" />
                 </div>
                 <div>
+                    <CAutocomplete
+                        name="manager_id"
+                        label="Odpovědná osoba"
+                        v-model="form.manager_id"
+                        :error="errors.manager_id"
+                        :items="users"
+                        option-label="label"
+                        clearable
+                    />
+                </div>
+                <Divider class="md:col-span-2"/>
+                <div>
                     <CInputText name="email" label="Email" v-model="form.email"  :error="errors.email" />
                 </div>
                 <div>
@@ -69,6 +87,7 @@ const initialValues = computed(() => ({
                 <div>
                     <CInputText name="tin" label="DIČ" v-model="form.tin"  :error="errors.tin" />
                 </div>
+
                 <Divider class="md:col-span-2"/>
                 <div class="md:col-span-2">
                     <CInputText name="street" label="Ulice" v-model="form.street"  :error="errors.street" />
