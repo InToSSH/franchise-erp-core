@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
+    <AppLayout title="Nastavení účtu">
 
         <div>
 

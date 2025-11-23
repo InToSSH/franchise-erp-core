@@ -6,13 +6,20 @@ import AppFooter from './AppFooter.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppTopbar from './AppTopbar.vue';
 import { useToast } from 'primevue/usetoast';
-import {usePage} from "@inertiajs/vue3";
+import {Head, usePage} from "@inertiajs/vue3";
 
 const toast = useToast();
 
 const page = usePage();
 
 const { layoutConfig, layoutState, isSidebarActive, toggleDarkMode } = useLayout();
+
+const props = defineProps({
+    title: {
+        type: String,
+        default: null,
+    },
+});
 
 
 const outsideClickListener = ref(null);
@@ -94,6 +101,7 @@ function isOutsideClicked(event) {
 </script>
 
 <template>
+    <Head v-if="title" :title="title"/>
     <div class="layout-wrapper" :class="containerClass">
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>

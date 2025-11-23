@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Objednávky">
         <div class="p-6 space-y-4">
             <!-- Header -->
             <PageHeader
@@ -106,7 +106,7 @@ import SupplierForm from "@/Components/Supplier/SupplierForm.vue";
 import {ref} from 'vue'
 import DataGrid from "@/Components/DataGrid.vue";
 import OrderForm from "@/Components/Order/OrderForm.vue";
-import {router} from "@inertiajs/vue3";
+import {Head, router} from "@inertiajs/vue3";
 import {useConfirm} from "primevue";
 import PageHeader from "@/Components/PageHeader.vue";
 
