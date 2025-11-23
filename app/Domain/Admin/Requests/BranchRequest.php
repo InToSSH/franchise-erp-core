@@ -20,6 +20,7 @@ class BranchRequest extends FormRequest
             'street' => ['nullable'],
             'city' => ['nullable'],
             'post_code' => ['nullable'],
+            'manager_id' => ['nullable', 'integer', 'exists:users,id'],
         ];
     }
 

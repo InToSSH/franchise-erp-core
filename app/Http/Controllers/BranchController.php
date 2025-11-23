@@ -8,6 +8,8 @@ use App\Actions\GenerateEntityCode;
 use App\Domain\Admin\Models\Branch;
 use App\Domain\Admin\Requests\BranchRequest;
 use App\Domain\Admin\Resources\BranchResource;
+use App\Http\Resources\UserOptionResource;
+use App\Models\User;
 use Inertia\Inertia;
 
 class BranchController extends Controller
@@ -19,14 +21,15 @@ class BranchController extends Controller
         $branches = $this->getDatatableResults(
             Branch::query()->with('users', 'manager'),
             'name',
-            ['name', 'code', 'email', 'phone', 'city'],
-            ['name', 'code', 'email', 'phone', 'city']
+            ['name', 'code', 'email', 'phone', 'city', 'manager.name'],
+            ['name', 'code', 'email', 'phone', 'city', 'manager.name']
         );
 
         return Inertia::render(
             'Admin/Branches/Index',
             [
                 'branches' => BranchResource::collection($branches),
+                'users' => UserOptionResource::collection(User::all())->toArray(request())
             ]
         );
     }

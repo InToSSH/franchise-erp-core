@@ -28,6 +28,7 @@
                 </Column>
                 <Column field="email" header="Email" sortable />
                 <Column field="phone" header="Telefon" sortable />
+                <Column field="manager.name" header="Odpovědná osoba" sortable />
                 <Column field="full_address" header="Adresa" />
                 <Column field="users" header="Uživatelé">
                     <template #body="slotProps">
@@ -45,6 +46,7 @@
             <BranchForm
                 v-model:visible="showForm"
                 :model="editingModel"
+                :users="users"
             />
         </div>
         <ConfirmDialog></ConfirmDialog>
@@ -61,6 +63,7 @@ import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     branches: Object,
+    users: Array,
 })
 
 const showForm = ref(false)
