@@ -23,6 +23,7 @@ trait DestroyModelTrait
         } catch (\Exception $e) {
             if ($e->getCode() == '23000') {
                 Session::flash('error', __('Smazání není možné. Záznam je vázán na ostatní data.'));
+                return back();
             }
             Session::flash('error', __('Nastala neočekávaná chyba při mazání záznamu: ') . $e->getMessage());
         }

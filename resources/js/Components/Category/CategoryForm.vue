@@ -52,7 +52,7 @@ const initialValues = computed(() => ({
                     <CInputText name="name" label="Název *" v-model="form.name" :error="errors.name" required/>
                 </div>
                 <div>
-                    <CInputText name="code" label="Kód (pro importy) *" v-model="form.code" :error="errors.code" required />
+                    <CInputText name="code" label="Kód (pro importy)" v-model="form.code" :error="errors.code" />
                 </div>
             </div>
         </div>

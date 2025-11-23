@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Domain\Catalog\Actions\Category\CreateCategory;
 use App\Domain\Catalog\Actions\Category\GetTree;
 use App\Domain\Catalog\Models\Category;
 use App\Domain\Catalog\Requests\CategoryRequest;
@@ -23,11 +24,11 @@ class CategoryController extends Controller
         );
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request, CreateCategory $createCategory)
     {
         $this->authorize('create', Category::class);
 
-        Category::create($request->validated());
+        $createCategory->execute($request->validated());
     }
 
     public function show(Category $category)

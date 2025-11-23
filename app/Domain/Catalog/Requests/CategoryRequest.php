@@ -17,7 +17,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'code' => ['required', 'unique:categories,code', 'alpha_dash:ascii'],
+            'code' => ['nullable', 'unique:categories,code', 'alpha_dash:ascii'],
             'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
         ];
     }
@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => [],
-            'code' => ['unique:categories,code,' . $this->category->id, 'alpha_dash:ascii'],
+            'code' => ['required', 'unique:categories,code,' . $this->category->id, 'alpha_dash:ascii'],
         ];
     }
 
