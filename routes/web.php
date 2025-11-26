@@ -5,6 +5,7 @@ use App\Domain\Sales\Models\Order;
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Documents\DocumentCategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -23,6 +24,7 @@ Route::middleware(
     Route::get('/', [MainController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/assets/images/{path}', [AssetsController::class, 'getImage'])->where('path','.+')->name('assets.images');
+    Route::get('/media/{mediaId}/{path?}', [AssetsController::class, 'getMedia'])->where('path','.+');
 
     Route::prefix('catalog')->name('catalog.')->group(function () {
         Route::resource('suppliers', SupplierController::class);
@@ -57,5 +59,9 @@ Route::middleware(
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('branches', BranchController::class);
         Route::resource('users', UserController::class);
+    });
+
+    Route::prefix('documents')->name('documents.')->group(function () {
+        Route::resource('categories', DocumentCategoryController::class);
     });
 });

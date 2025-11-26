@@ -28,7 +28,8 @@
                     >
                         <Column header="Obrázek">
                             <template #body="slotProps">
-                                <img :src="route('assets.images', {path: slotProps.data.image_path})" :alt="slotProps.data.image" class="w-28 rounded" />
+                                <img v-if="slotProps.data.image_path" :src="route('assets.images', {path: slotProps.data.image_path})" :alt="slotProps.data.image" class="w-28 rounded" />
+                                <img v-else src="/img/no-img.png" alt="No image" class="w-28 rounded" />
                             </template>
                         </Column>
                         <Column field="name" header="Název" sortable>

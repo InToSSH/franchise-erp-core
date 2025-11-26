@@ -17,6 +17,7 @@
         "laravel/telescope": "^5.15",
         "laravel/tinker": "^2.10.1",
         "silber/bouncer": "^1.0",
+        "spatie/laravel-medialibrary": "^11.17",
         "symfony/http-client": "^7.3",
         "symfony/postmark-mailer": "^7.3",
         "tightenco/ziggy": "^2.0"

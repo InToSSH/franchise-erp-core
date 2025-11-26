@@ -29,6 +29,7 @@ const model = ref([
         visible: can('admin.branches.view') || can('admin.users.view'),
         items: [
             {label: 'Pobočky', gicon: 'globe', to: '/admin/branches', visible: can('admin.branches.view')},
+            {label: 'Kategorie dokumentů', gicon: 'flowchart', to: '/documents/categories', visible: can('documents.categories.edit')},
             {label: 'Uživatelé', gicon: 'person', to: '/admin/users', visible: can('admin.users.view')},
         ]
     },
