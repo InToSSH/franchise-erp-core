@@ -10,16 +10,15 @@ services:
             - app_storage:/app/storage
             - app_cache:/app/bootstrap/cache
         environment:
-            DB_HOST: mysql
             DB_PORT: 3306
             CACHE_DRIVER: redis
             SESSION_DRIVER: redis
             QUEUE_CONNECTION: redis
             REDIS_HOST: redis
             REDIS_CLIENT: phpredis
+        networks:
+            - master-sql
         depends_on:
-            mysql:
-                condition: service_healthy
             redis:
                 condition: service_started
 
@@ -36,42 +35,21 @@ services:
             target: php
         entrypoint: [ "/entrypoint-queue.sh" ]
         environment:
-            DB_HOST: mysql
             DB_PORT: 3306
             CACHE_DRIVER: redis
             SESSION_DRIVER: redis
             QUEUE_CONNECTION: redis
             REDIS_HOST: redis
             REDIS_CLIENT: phpredis
+        networks:
+            - master-sql
         depends_on:
-            mysql:
-                condition: service_healthy
             redis:
                 condition: service_started
         volumes:
             - app_storage:/app/storage
             - app_cache:/app/bootstrap/cache
         restart: unless-stopped
-
-    mysql:
-        build:
-            context: .
-            dockerfile: docker/production/mysql/Dockerfile
-        restart: unless-stopped
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
-        volumes:
-            - db:/var/lib/mysql
-        networks:
-            - mysql_admin
-        healthcheck:
-            test: ["CMD-SHELL", "mysqladmin --user=$${MYSQL_USER} --password=$${MYSQL_PASSWORD} --host=localhost ping"]
-            interval: 5s
-            timeout: 5s
-            retries: 10
 
     redis:
         image: redis:latest
@@ -81,12 +59,11 @@ services:
             - cache:/data
 
 volumes:
-    db:
     cache:
     app_storage:
     app_cache:
 
 networks:
-    mysql_admin:
+    master-sql:
         external: true
 
